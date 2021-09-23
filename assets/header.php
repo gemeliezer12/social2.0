@@ -42,6 +42,7 @@ if(isset($_SESSION["userID"])){
     <link rel="stylesheet" href="assets/lib/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script defer src="assets/app.js"></script>
     <title style="display: none;">Document</title>
 </head>
 

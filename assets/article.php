@@ -1,3 +1,4 @@
+<script></script>
 <?php
 $dateCreatedArray= array();
 foreach($postArray as $post){;

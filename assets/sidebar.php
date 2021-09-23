@@ -28,7 +28,7 @@
         <i class="fas fa-cog icon-hover-m"></i>
     </div>
     <div class="profile-options">
-        <div class="border-all-base radius-20 padding-top-15 padding-bottom-15">
+        <div class="border-all-base radius-20 padding-top-15 padding-bottom-15 hide" id="profile-option">
             <div class="padding-15 padding-y-10 border-bottom cursor-pointer flex hover-base-02" href="profile.php?username=<?php
             echo $_SESSION["username"];
             ?>">
@@ -54,6 +54,6 @@
                 ?>">
             </form>
         </div>
-        <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
+        <img class="profile-picture-50" id="profile-btn" src="profiles/profile-picture/default.png" alt="">
     </div>
 </nav>

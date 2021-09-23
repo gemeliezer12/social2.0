@@ -17,11 +17,6 @@
     --primary-color1-trans2: rgba(30, 175, 225, 0.8);
     --primary-color1-trans3: rgba(30, 175, 225, 0.4);
     --primary-color1-trans4: rgba(30, 175, 225, 0.02);
-    /* --primary-color1: rgba(220, 20, 60);
-    --primary-color1-trans1: rgba(220, 20, 60, 0.1);
-    --primary-color1-trans2: rgba(220, 20, 60, 0.8);
-    --primary-color1-trans3: rgba(220, 20, 60, 0.4);
-    --primary-color1-trans4: rgba(220, 20, 60, 0.02); */
     --bg-color: rgba(20, 30, 40);
     --opacity-1: 0.1;
     --opacity-2: 0.8;
@@ -299,10 +294,10 @@ button{
 }
 
 .preload * {
-    -webkit-transition: none !important;
+    /* -webkit-transition: none !important;
     -moz-transition: none !important;
     -ms-transition: none !important;
-    -o-transition: none !important;
+    -o-transition: none !important; */
 }
 
 .btn-count{
@@ -467,3 +462,4 @@ img{
 .fs-16{
     font-size: 16px;
 }
+

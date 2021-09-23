@@ -26,7 +26,7 @@
     position: relative;
 }
 
-.sidebar .border-all-base{
+#profile-option{
     position: relative;
     width: 250px;
     position: absolute;
@@ -34,6 +34,11 @@
     left: -9px;
     transform: translateY(calc(-100% - 10px));
     background: var(--bg-color);
+    transition: all 0.2s ease;
+}
+#profile-option.hide{
+    transform: translateY(calc(-100% - 10px)) translateX(calc(-100% - 10px));
+    opacity: 0;
 }
 /*  */
 body{
@@ -236,6 +241,7 @@ footer.post-btns{
 footer .icon-hover-s{
     color: var(--base-color-trans3);
     transition: color 0.2s ease;
+    transition: background 0.2s ease;
 }
 
 i.fa-heart:hover{
@@ -318,6 +324,7 @@ main.post header{
     display: flex;
     align-items: center;
 }
+
 
 @media only screen and (min-width: 600px) {
     body{
