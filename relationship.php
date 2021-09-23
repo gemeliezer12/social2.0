@@ -1,8 +1,14 @@
 <?php
 include "assets/header.php";
-$userData = $user->fetchData($_GET["username"]);
+if(isset($_GET["following"])){
+    $userData = $user->fetchData($_GET["following"]);
+    $users = $relationship->fetchFollowing($userData["userID"]);
+}
+elseif(isset($_GET["follower"])){
+    $userData = $user->fetchData($_GET["follower"]);
+    $users = $relationship->fetchfollower($userData["userID"]);
+}
 $profileData = $profile->fetchData($userData["userID"]);
-$followers = $relationship->fetchFollower($userData["userID"]);
 ?>
 <body>
     <?php
@@ -26,18 +32,21 @@ $followers = $relationship->fetchFollower($userData["userID"]);
             <a href="" class="subtitle-m tab">Followers you know</a>
             <a href="follower.php?username=<?php
             echo $userData["username"];
-            ?>" class="subtitle-m tab current">Followers</a>
+            ?>" class="subtitle-m tab">Followers</a>
             <a href="following.php?username=<?php
             echo $userData["username"];
-            ?>" class="subtitle-m tab">Following</a>
+            ?>" class="subtitle-m tab current">Following</a>
         </header>
-        <?php
+        <div class="display: none;">
+
+            <?php
             $userIDs = array();
-            foreach($followers as $follower){
-                array_push($userIDs, $follower["followerID"]);
+            foreach($users as $userResult){
+                array_push($userIDs, $userResult["followingID"]);
             }
             include "assets/profile.php";
-        ?>
+            ?>
+        </div>
     </main>
 </body>
 </html>

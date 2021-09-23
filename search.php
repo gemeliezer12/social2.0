@@ -17,22 +17,9 @@ if(isset($_GET["search"])){
 }
 ?>
 <body>
-    <nav class="sidebar">
-        <div class="icon-links">
-            <i onclick="location.href='home.php';" class="fab fa-twitter icon-hover-m current"></i>
-            <i onclick="location.href='home.php';" class="fas fa-home icon-hover-m"></i>
-            <i onclick="location.href='search.php';" class="fas fa-search icon-hover-m current"></i>
-            <i onclick="location.href='notif.php';" class="far fa-bell icon-hover-m"></i>
-            <i onclick="location.href='message.php';" class="far fa-envelope icon-hover-m"></i>
-            <i onclick="location.href='profile.php?username=<?php
-            echo $_SESSION["username"];
-            ?>';" class="far fa-user icon-hover-m"></i>
-            <i class="fas fa-cog icon-hover-m"></i>
-        </div>
-        <div>
-            <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
-        </div>
-    </nav>
+    <?php
+        include "assets/sidebar.php";
+    ?>
 
     <main class="sidebar-margin-left main-body" style="">
         <header class="main-header padding-15 border-bottom cursor-default">
@@ -61,7 +48,7 @@ if(isset($_GET["search"])){
         }
         ?>
         <?php
-        include "assets/post.php";
+        include "assets/article.php";
         ?>
     </main>
 </body>

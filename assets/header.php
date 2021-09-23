@@ -3,8 +3,6 @@ include "inc/dbh.php";
 include "class/user.php";
 include "class/profile.php";
 include "class/relationship.php";
-// include "class/post.php";
-// include "class/comment.php";
 include "class/article.php";
 include "class/post-interaction.php";
 include "class/comment-interaction.php";
@@ -18,8 +16,6 @@ include "class/search.php";
 $user = new User;
 $profile = new Profile;
 $relationship = new Relationship;
-// $post = new Post;
-// $comment = new Comment;
 $article = new Article;
 $postInteraction = new PostInteraction;
 $commentInteraction = new CommentInteraction;
@@ -34,6 +30,7 @@ if(isset($_SESSION["userID"])){
     $selfFollowings = $relationship->fetchFollowing($_SESSION["userID"]);
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en" class="preload">

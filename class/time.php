@@ -2,7 +2,6 @@
 class Time{
     public function timeAgo($timestamp){
         $timeAgo = time() - $timestamp;
-        $ago = "s";
         if($timeAgo >= 60 * 60 * 24){
             $month = date("M", $timestamp);
             $day = date("d", $timestamp);

@@ -38,7 +38,7 @@
                     }
                     elseif($checkFollow > 0){
                         ?>
-                        <input type="submit" name="unsubmit" class="btn-m btn-c" value="Following">
+                        <input type="submit" name="unsubmit" class="btn-m btn-c hover-color" value="Following">
                         <?php
                     }
                     ?>
