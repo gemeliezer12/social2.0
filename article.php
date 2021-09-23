@@ -82,24 +82,10 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                 </div>
                 
                     <?php
-                    if(count($mainFetchLike) > 0 || count($mainFetchRepost) > 0 || count($mainFetchComment) > 0){
+                    if(count($mainFetchLike) > 0 || count($mainFetchRepost) > 0){
                         ?>
                         <div class="padding-y-15 border-top">
                         <?php
-                        if(count($mainFetchComment) > 0){
-                            ?>
-                            <a class="subtitle-s hover-underline" href="like.php?<?php
-                            echo $mainFetchComment;
-                            ?>=<?php
-                            echo $mainArticle[$mainArticleType."ID"];
-                            ?>">
-                                <span><?php
-                                echo count($mainFetchComment);
-                                ?></span>
-                                Comments
-                            </a>
-                            <?php
-                        }
                         if(count($mainFetchLike) > 0){
                             ?>
                             <a class="subtitle-s hover-underline" href="like.php?<?php

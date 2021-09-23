@@ -9,7 +9,7 @@ if(empty($_GET["username"])){
 }
 $userData = $user->fetchData($_GET["username"]);
 $profileData = $profile->fetchData($userData["userID"]);
-$userPost = $post->fetchDataByUser($userData["userID"]);
+$userPost = $article->fetchByUser($userData["userID"], "post");
 $following = $relationship->fetchFollowing($userData["userID"]);
 $follower = $relationship->fetchFollower($userData["userID"]);
 $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID"]);
@@ -119,14 +119,14 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
         <div class="space"></div>
         <?php
         $postArray = array();
-        $selfPosts = $post->fetchDataByUser($_SESSION["userID"]);
+        $selfPosts = $article->fetchByUser($_SESSION["userID"], "post");
         foreach($selfPosts as $selfPost){
             array_push($postArray, $selfPost);
         }
         ?>
         <main class="posts">
             <?php
-            include "assets/post.php";
+            include "assets/article.php";
             ?>
         </main>
     </main>
