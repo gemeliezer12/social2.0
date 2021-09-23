@@ -5,24 +5,21 @@ if(!isset($_SESSION["username"])){
 }
 if(isset($_GET["post"])){
     $mainArticleType = "post";
-    $mainArticle = $post->fetchDataByPost($_GET["post"]);
-    $mainUser = $user->fetchData($mainArticle["userID"]);
-    $mainProfile = $profile->fetchData($mainArticle["userID"]);
-    $mainCheckLike = $postInteraction->checkLike($_SESSION["userID"], $mainArticle["postID"]);
-    $mainFetchLike = $postInteraction->fetchLike($mainArticle["postID"]);
-    $mainCheckRepost = $postInteraction->checkRepost($_SESSION["userID"], $mainArticle["postID"]);
-    $mainFetchRepost = $postInteraction->fetchRepost($mainArticle["postID"]);
+    $mainArticleInteration = $postInteraction;
 }
 elseif(isset($_GET["comment"])){
     $mainArticleType = "comment";
-    $mainArticle = $comment->fetchByComment($_GET["comment"]);
-    $mainUser = $user->fetchData($mainArticle["userID"]);
-    $mainProfile = $profile->fetchData($mainArticle["userID"]);
-    $mainCheckLike = $commentInteraction->checkLike($_SESSION["userID"], $mainArticle["commentID"]);
-    $mainFetchLike = $commentInteraction->fetchLike($mainArticle["commentID"]);
-    $mainCheckRepost = $commentInteraction->checkRepost($_SESSION["userID"], $mainArticle["commentID"]);
-    $mainFetchRepost = $commentInteraction->fetchRepost($mainArticle["commentID"]);
+    $mainArticleInteration = $commentInteraction;
 }
+$mainArticle = $article->fetchByArticle($_GET[$mainArticleType], $mainArticleType);
+$mainUser = $user->fetchData($mainArticle["userID"]);
+$mainProfile = $profile->fetchData($mainArticle["userID"]);
+$mainCheckLike = $mainArticleInteration->checkLike($_SESSION["userID"], $mainArticle[$mainArticleType."ID"]);
+$mainFetchLike = $mainArticleInteration->fetchLike($mainArticle[$mainArticleType."ID"]);
+$mainCheckRepost = $mainArticleInteration->checkRepost($_SESSION["userID"], $mainArticle[$mainArticleType."ID"]);
+$mainFetchRepost = $mainArticleInteration->fetchRepost($mainArticle[$mainArticleType."ID"]);
+$mainCheckComment = $article->checkCommented($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
+$mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID"], $mainArticleType);
 ?>
 <body>
     <nav class="sidebar">
@@ -53,11 +50,11 @@ elseif(isset($_GET["comment"])){
         <main class="post padding-15">
             <div class="border-bottom padding-top">
                 <header>
-                    <a class="margin-10 profile-picture-60" href="profile.php?username=<?php
+                    <div class="margin-10" href="profile.php?username=<?php
                     echo $mainUser["username"];
                     ?>">
                         <img src="profiles/profile-picture/default.png" alt="" class="profile-picture-60">    
-                    </a>
+                    </div>
                     <div>
                         <a href="profile.php?username=<?php
                         echo $mainUser["username"];
@@ -85,10 +82,24 @@ elseif(isset($_GET["comment"])){
                 </div>
                 
                     <?php
-                    if(count($mainFetchLike) > 0 || count($mainFetchRepost) > 0){
+                    if(count($mainFetchLike) > 0 || count($mainFetchRepost) > 0 || count($mainFetchComment) > 0){
                         ?>
                         <div class="padding-y-15 border-top">
                         <?php
+                        if(count($mainFetchComment) > 0){
+                            ?>
+                            <a class="subtitle-s hover-underline" href="like.php?<?php
+                            echo $mainFetchComment;
+                            ?>=<?php
+                            echo $mainArticle[$mainArticleType."ID"];
+                            ?>">
+                                <span><?php
+                                echo count($mainFetchComment);
+                                ?></span>
+                                Comments
+                            </a>
+                            <?php
+                        }
                         if(count($mainFetchLike) > 0){
                             ?>
                             <a class="subtitle-s hover-underline" href="like.php?<?php
@@ -125,7 +136,18 @@ elseif(isset($_GET["comment"])){
                 
                 <footer class="width-100 post-btns border-top padding-y-6">
                     <a href="">
-                        <i class="far fa-comment icon-hover-s"></i>
+                        <?php
+                        if($mainCheckComment > 0){
+                            ?>
+                            <i class="fas fa-comment icon-hover-s current"></i>
+                            <?php
+                        }
+                        else{
+                            ?>
+                            <i class="far fa-comment icon-hover-s"></i>
+                            <?php
+                        }
+                        ?>
                     </a>
                     <form action="inc/repost-<?php
                     echo $mainArticleType;
@@ -159,27 +181,27 @@ elseif(isset($_GET["comment"])){
                         }
                         ?>">
                         </p>
-                    </form>  
-                    <form action="inc/like-<?php
+                    </form>
+                    <form id="like-form" action="inc/like-<?php
                     echo $mainArticleType;
                     ?>.php" method="POST">
-                        <input type="hidden" name="posterID" value="<?php
-                        echo $postUser["userID"];
+                        <input id="posterID" type="hidden" name="posterID" value="<?php
+                        echo $mainUser["userID"];
                         ?>">
-                        <input type="hidden" name="postID" value="<?php
+                        <input id="posterID" type="hidden" name="postID" value="<?php
                         echo $mainArticle[$mainArticleType."ID"];
                         ?>">
                         <?php
                         if($mainCheckLike > 0){
                             ?>
-                            <button name="unsubmit" type="submit">
+                            <button id="unsubmit" name="unsubmit" type="submit">
                                 <i class="fas fa-heart icon-hover-s liked"></i>
                             </button>
                             <?php
                         }
                         else{
                             ?>
-                            <button name="submit" type="submit">
+                            <button id="submit" name="submit" type="submit">
                                 <i class="far fa-heart icon-hover-s"></i>
                             </button>
                             <?php
@@ -232,22 +254,15 @@ elseif(isset($_GET["comment"])){
         </form>
         <?php
         $postArray = array();
-        if(isset($mainArticle["postID"])){
-            $comments = $comment->fetchByCommentedPost($mainArticle[$mainArticleType."ID"]);
-            foreach($comments as $comment){
-                array_push($postArray, $comment);
-            }
+        $comments = $article->fetchByCommented($mainArticle[$mainArticleType."ID"], $mainArticleType);
+        foreach($comments as $result){
+            array_push($postArray, $result);
         }
-        elseif(isset($mainArticle["commentID"])){
-            $comments = $comment->fetchByCommentedComments($mainArticle[$mainArticleType."ID"]);
-            foreach($comments as $comment){
-                array_push($postArray, $comment);
-            }
-        }
+
         ?>
         <main class="posts">
             <?php
-            include "assets/post.php";
+            include "assets/article.php";
             ?>
         </main>
     </main>

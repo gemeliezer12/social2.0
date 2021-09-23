@@ -9,15 +9,11 @@ if(isset($_POST["submit"])){
     $query->bindValue(2, $postID);
     $query->execute();
     if($query->rowCount() > 0){
-        $query = $pdo->prepare("UPDATE postinteractions SET liked=? WHERE postedID=? AND postID=?");
+        $query = $pdo->prepare("UPDATE postinteractions SET liked=?, dateLiked=? WHERE postedID=? AND postID=?");
         $query->bindValue(1, true);
-        $query->bindValue(2, $postedID);
-        $query->bindValue(3, $postID);
-        $query->execute();
-        $query = $pdo->prepare("UPDATE postinteractions SET dateLiked=? WHERE postedID=? AND postID=?");
-        $query->bindValue(1, time());
-        $query->bindValue(2, $postedID);
-        $query->bindValue(3, $postID);
+        $query->bindValue(2, time());
+        $query->bindValue(3, $postedID);
+        $query->bindValue(4, $postID);
         $query->execute();
     }
     else{
@@ -31,19 +27,17 @@ if(isset($_POST["submit"])){
     }
 }
 elseif(isset($_POST["unsubmit"])){
+    
     $query = $pdo->prepare("DELETE FROM postinteractions WHERE reposted=? AND postedID=? AND postID=?");
     $query->bindValue(1, false);
     $query->bindValue(2, $postedID);
     $query->bindValue(3, $postID);
     $query->execute();
-    // $query = $pdo->prepare("UPDATE postinteractions SET liked=? WHERE postedID=? AND postID=?");
-    // $query->bindValue(1, false);
-    // $query->bindValue(2, $postedID);
-    // $query->bindValue(3, $postID);
-    // $query->execute();
-    // $query = $pdo->prepare("UPDATE postinteractions SET dateLiked=? WHERE postedID=? AND postID=?");
-    // $query->bindValue(1, NULL);
-    // $query->bindValue(2, $postedID);
-    // $query->bindValue(3, $postID);
-    // $query->execute();
+    $query = $pdo->prepare("UPDATE postinteractions SET liked=?, dateLiked=?  WHERE postedID=? AND postID=?");
+    $query->bindValue(1, false);
+    $query->bindValue(2, NULL);
+    $query->bindValue(3, $postedID);
+    $query->bindValue(4, $postID);
+    $query->execute();
 }
+header("Location: ../post.php?post=$postID");

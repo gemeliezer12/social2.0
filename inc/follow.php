@@ -14,14 +14,6 @@ if(isset($_POST["submit"])){
         $query->bindValue(1, $following);
         $query->bindValue(2, $follower);
         $query->execute();
-
-        $query = $pdo->prepare("SELECT username FROM users WHERE userID=?;");
-        $query->bindValue(1, $following);
-        $query->execute();
-        $result = $query->fetch();
-        $username = $result["username"];
-        header("Location: ../profile.php?username=$username");
-        exit();
     }
 }
 elseif(isset($_POST["unsubmit"])){
@@ -32,12 +24,11 @@ elseif(isset($_POST["unsubmit"])){
     $query->bindValue(1, $following);
     $query->bindValue(2, $follower);
     $query->execute();
-
-    $query = $pdo->prepare("SELECT username FROM users WHERE userID=?;");
-    $query->bindValue(1, $following);
-    $query->execute();
-    $result = $query->fetch();
-    $username = $result["username"];
-    // header("Location: ../profile.php?username=$username");
-    // exit();
 }
+$query = $pdo->prepare("SELECT username FROM users WHERE userID=?;");
+$query->bindValue(1, $following);
+$query->execute();
+$result = $query->fetch();
+$username = $result["username"];
+header("Location: ../profile.php?username=$username");
+exit();

@@ -47,19 +47,19 @@ if(!isset($_SESSION["username"])){
         <?php
         $postArray = array();
         foreach($selfFollowings as $selfFollowing){
-            $followingPosts = $post->fetchDataByUser($selfFollowing["followingID"]);
+            $followingPosts = $article->fetchByUser($selfFollowing["followingID"], "post");
             foreach($followingPosts as $followingPost){
                 array_push($postArray, $followingPost);
             }
         }
-        $selfPosts = $post->fetchDataByUser($_SESSION["userID"]);
+        $selfPosts = $article->fetchByUser($_SESSION["userID"], "post");
         foreach($selfPosts as $selfPost){
             array_push($postArray, $selfPost);
         }
         ?>
         <main class="posts">
             <?php
-            include "assets/post.php";
+            include "assets/article.php";
             ?>
         </main>
     </main>

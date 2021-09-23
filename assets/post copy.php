@@ -12,7 +12,7 @@ foreach($postArray as $post){
         $articleInteraction = $postInteraction;
         $articleType = "post";
     }
-    if(isset($post["commentID"])){
+    elseif(isset($post["commentID"])){
         $articleInteraction = $commentInteraction;
         $articleType = "comment";
     }
@@ -20,10 +20,12 @@ foreach($postArray as $post){
     $fetchLike = $articleInteraction->fetchLike($post[$articleType."ID"]);
     $checkRepost = $articleInteraction->checkRepost($_SESSION["userID"], $post[$articleType."ID"]);
     $fetchRepost = $articleInteraction->fetchRepost($post[$articleType."ID"]);
+    $fetchComment = $comment->fetchComment($post[$articleType."ID"], $articleType);
+    $checkComment = $comment->checkComment($post[$articleType."ID"], $_SESSION["userID"], $articleType);
     ?>
         <article class="post padding-15 padding-equal border-bottom" onclick="location.href='post.php?<?php echo $articleType?>=<?php echo $post[$articleType."ID"]?>';">
-            <aside class="margin-right-10">
-                <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
+        <aside class="margin-right-10">
+            <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
             </aside>
             <main class="width-100">
                 <a href="profile.php?username=<?php
@@ -47,8 +49,34 @@ foreach($postArray as $post){
                 </article>
                 
                 <footer class="width-100 post-btns margin-top-6">
-                    <a href="">
-                        <i class="far fa-comment icon-hover-s"></i>
+                    <a class="btn-count" href="">
+                        <?php
+                        if($checkComment > 0){
+                            ?>
+                            <i class="fas fa-comment icon-hover-s commented"></i>
+                            <?php
+                        }
+                        else{
+                            ?>
+                            <i class="far fa-comment icon-hover-s"></i>
+                            <?php
+                        }
+                        ?>
+                        <?php
+                        if(count($fetchComment) > 0){
+                        ?>
+                        <p class="subtitle-m <?php
+                        if($checkComment > 0){
+                            echo "commented";
+                        }
+                        ?>">
+                        <?php
+                        echo count($fetchComment);
+                        ?>
+                        </p>
+                        <?php
+                        }
+                        ?>
                     </a>
                     <form class="btn-count"action="inc/repost-<?php
                     echo($articleType);

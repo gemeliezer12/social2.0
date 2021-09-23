@@ -245,6 +245,14 @@ footer .liked{
     color: rgba(220, 20, 60);
 }
 
+footer .commented{
+    color: rgba(30, 175, 225);
+}
+
+footer .commented{
+    color: rgba(30, 175, 225);
+}
+
 footer i.reposted{
     color: rgba(30, 225, 30);;
 }

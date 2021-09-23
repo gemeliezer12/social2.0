@@ -3,8 +3,9 @@ include "inc/dbh.php";
 include "class/user.php";
 include "class/profile.php";
 include "class/relationship.php";
-include "class/post.php";
-include "class/comment.php";
+// include "class/post.php";
+// include "class/comment.php";
+include "class/article.php";
 include "class/post-interaction.php";
 include "class/comment-interaction.php";
 include "class/time.php";
@@ -17,8 +18,9 @@ include "class/search.php";
 $user = new User;
 $profile = new Profile;
 $relationship = new Relationship;
-$post = new Post;
-$comment = new Comment;
+// $post = new Post;
+// $comment = new Comment;
+$article = new Article;
 $postInteraction = new PostInteraction;
 $commentInteraction = new CommentInteraction;
 $time = new Time;
@@ -42,6 +44,7 @@ if(isset($_SESSION["userID"])){
     <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="assets/lib/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <title style="display: none;">Document</title>
 </head>
 
