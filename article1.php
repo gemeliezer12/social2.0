@@ -29,16 +29,17 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
         $(document).ready(function(){
             setInterval(function(){
                 $(".ajax-loader").load("ajax/fetch-like.php",{
-                    articleID: <?php echo $mainArticle[$mainArticleID]?>,
+                    articleID: <?php echo $mainArticle[$articleID]?>,
                     type: "<?php echo $mainArticleType?>"
                 });
             }, 200);
             $("#like-input-<?php
             echo $mainArticleType;
-            echo $mainArticle[$mainArticleID]
+            echo $mainArticle[$articleID]
                 ?>").click(function(){
+                    
                     $(".like-loader").load("inc/like.php",{
-                    articleID: <?php echo $mainArticle[$mainArticleID]?>,
+                    articleID: <?php echo $mainArticle[$articleID]?>,
                     posterID: "<?php echo $mainArticle["userID"]?>",
                     submit: $(this).children("button").attr("name"),
                     type: "<?php
@@ -48,11 +49,11 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
             })
             $("#repost-input-<?php
             echo $mainArticleType;
-            echo $mainArticle[$mainArticleID]
+            echo $mainArticle[$articleID]
                 ?>").click(function(){
                     
                     $(".repost-loader").load("inc/repost.php",{
-                    articleID: <?php echo $mainArticle[$mainArticleID]?>,
+                    articleID: <?php echo $mainArticle[$articleID]?>,
                     posterID: "<?php echo $mainArticle["userID"]?>",
                     submit: $(this).children("button").attr("name"),
                     type: "<?php
@@ -116,10 +117,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                             ?>=<?php
                             echo $mainArticle[$mainArticleType."ID"];
                             ?>">
-                                <span id="like-count-<?php
-                                echo $mainArticleType;
-                                echo $mainArticle[$mainArticleID];
-                                ?>"><?php
+                                <span><?php
                                 echo count($mainFetchLike);
                                 ?></span>
                                 Likes
@@ -161,10 +159,16 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                         }
                         ?>
                     </a>
-                    <div id="repost-input-<?php
-                    echo $mainArticleType;
-                    echo $mainArticle[$mainArticleID]
+                    <div id="like-repost-<?php
+                    echo $articleType;
+                    echo $post[$articleID]
                     ?>" action="inc/repost.php" method="POST">
+                        <input type="hidden" name="posterID" value="<?php
+                        echo $mainUser["userID"];
+                        ?>">
+                        <input type="hidden" name="postID" value="<?php
+                        echo $mainArticle[$mainArticleType."ID"];
+                        ?>">
                         <?php
                         if($mainCheckRepost > 0){
                             ?>
@@ -182,11 +186,23 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                         }
                         
                         ?>
+                        <p class="subtitle-m <?php
+                        if($mainCheckRepost > 0){
+                            echo "reposted";
+                        }
+                        ?>">
+                        </p>
                     </div>
                     <div id="like-input-<?php
-                    echo $mainArticleType;
-                    echo $mainArticle[$mainArticleID]
-                    ?>" action="inc/like.php" method="POST">
+                    echo $articleType;
+                    echo $post[$articleID]
+                    ?>" id="like-form" action="inc/like.php" method="POST">
+                        <input id="posterID" type="hidden" name="posterID" value="<?php
+                        echo $mainUser["userID"];
+                        ?>">
+                        <input id="posterID" type="hidden" name="postID" value="<?php
+                        echo $mainArticle[$mainArticleType."ID"];
+                        ?>">
                         <?php
                         if($mainCheckLike > 0){
                             ?>
@@ -203,6 +219,13 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                             <?php
                         }
                         ?>
+                        
+                        <p class="subtitle-m <?php
+                        if($mainCheckLike > 0){
+                            echo "liked";
+                        }
+                        ?>">
+                        </p>
                     </div>
                     <i class="fas fa-ellipsis-h icon-hover-s"></i>
                 </footer>

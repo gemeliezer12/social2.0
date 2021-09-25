@@ -4,21 +4,15 @@ include "class/user.php";
 include "class/profile.php";
 include "class/relationship.php";
 include "class/article.php";
-include "class/post-interaction.php";
-include "class/comment-interaction.php";
+include "class/article-interaction.php";
 include "class/time.php";
 include "class/search.php";
-
-// session_unset();
-
-
 
 $user = new User;
 $profile = new Profile;
 $relationship = new Relationship;
 $article = new Article;
-$postInteraction = new PostInteraction;
-$commentInteraction = new CommentInteraction;
+$articleInteraction = new ArticleInteraction;
 $time = new Time;
 $search = new Search;
 

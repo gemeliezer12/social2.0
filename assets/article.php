@@ -1,4 +1,3 @@
-<script></script>
 <?php
 $dateCreatedArray= array();
 foreach($postArray as $post){;
@@ -10,21 +9,59 @@ foreach($postArray as $post){
     $postUser = $user->fetchData($post["userID"]);
     $postProfile = $profile->fetchData($post["userID"]);
     if(isset($post["postID"])){
-        $articleInteraction = $postInteraction;
         $articleType = "post";
+        $articleID = "postID";
     }
     elseif(isset($post["commentID"])){
-        $articleInteraction = $commentInteraction;
         $articleType = "comment";
+        $articleID = "commentID";
     }
-    $checkLike = $articleInteraction->checkLike($_SESSION["userID"], $post[$articleType."ID"]);
-    $fetchLike = $articleInteraction->fetchLike($post[$articleType."ID"]);
-    $checkRepost = $articleInteraction->checkRepost($_SESSION["userID"], $post[$articleType."ID"]);
-    $fetchRepost = $articleInteraction->fetchRepost($post[$articleType."ID"]);
-    $fetchComment = $article->fetchByCommented($post[$articleType."ID"], $articleType);
-    $checkComment = $article->checkCommented($post[$articleType."ID"], $_SESSION["userID"], $articleType);
+    $checkLike = $articleInteraction->checkLike($_SESSION["userID"], $post[$articleID], $articleType);
+    $fetchLike = $articleInteraction->fetchLike($post[$articleID], $articleType);
+    $checkRepost = $articleInteraction->checkRepost($_SESSION["userID"], $post[$articleID], $articleType);
+    $fetchRepost = $articleInteraction->fetchRepost($post[$articleID], $articleType);
+    $fetchComment = $article->fetchByCommented($post[$articleID], $articleType);
+    $checkComment = $article->checkCommented($post[$articleID], $_SESSION["userID"], $articleType);
     ?>
-        <article class="post padding-15 padding-equal border-bottom" onclick="location.href='article.php?<?php echo $articleType?>=<?php echo $post[$articleType."ID"]?>';">
+    <script>
+        $(document).ready(function(){
+            setInterval(function(){
+                $(".ajax-loader").load("ajax/fetch-like.php",{
+                    articleID: <?php echo $post[$articleID]?>,
+                    type: "<?php echo $articleType?>"
+                });
+            }, 200);
+            $("#like-input-<?php
+            echo $articleType;
+            echo $post[$articleID]
+                ?>").click(function(){
+                    
+                    $(".like-loader").load("inc/like.php",{
+                    articleID: <?php echo $post[$articleID]?>,
+                    posterID: "<?php echo $post["userID"]?>",
+                    submit: $(this).children("button").attr("name"),
+                    type: "<?php
+                    echo $articleType;
+                    ?>"
+                });
+            })
+            $("#repost-input-<?php
+            echo $articleType;
+            echo $post[$articleID]
+                ?>").click(function(){
+                    
+                    $(".repost-loader").load("inc/repost.php",{
+                    articleID: <?php echo $post[$articleID]?>,
+                    posterID: "<?php echo $post["userID"]?>",
+                    submit: $(this).children("button").attr("name"),
+                    type: "<?php
+                    echo $articleType;
+                    ?>"
+                });
+            })
+        })
+    </script>
+        <article class="post padding-15 padding-equal border-bottom" >
         <aside class="margin-right-10">
             <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
             </aside>
@@ -79,19 +116,14 @@ foreach($postArray as $post){
                         }
                         ?>
                     </a>
-                    <form class="btn-count"action="inc/repost-<?php
-                    echo($articleType);
-                    ?>.php" method="POST">
-                        <input type="hidden" name="posterID" value="<?php
-                        echo $postUser["userID"];
-                        ?>">
-                        <input type="hidden" name="postID" value="<?php
-                        echo $post[$articleType."ID"];
-                        ?>">
+                    <div id="repost-input-<?php
+                    echo $articleType;
+                    echo $post[$articleID]
+                    ?>" class="btn-count">
                         <?php
                         if($checkRepost > 0){
                             ?>
-                            <button name="unsubmit" type="submit">
+                            <button  name="unsubmit" type="submit">
                                 <i class="fas fa-retweet icon-hover-s reposted"></i>
                             </button>
                             <?php
@@ -103,30 +135,28 @@ foreach($postArray as $post){
                             </button>
                             <?php
                         }
-                        if(count($fetchRepost) > 0){
+
                         ?>
-                        <p class="subtitle-m <?php
+                        <p id="repost-count-<?php
+                        echo $articleType;
+                        echo $post[$articleID];
+                        ?>" class="subtitle-m <?php
                         if($checkRepost > 0){
                             echo "reposted";
+                        }
+                        if(count($fetchRepost) <= 0){
+                            echo "hidden";
                         }
                         ?>">
                         <?php
                         echo count($fetchRepost);
                         ?>
                         </p>
-                        <?php
-                        }
-                        ?>
-                    </form>  
-                    <form class="btn-count" action="inc/like-<?php
-                    echo($articleType);
-                    ?>.php" method="POST">
-                        <input type="hidden" name="posterID" value="<?php
-                        echo $postUser["userID"];
-                        ?>">
-                        <input type="hidden" name="postID" value="<?php
-                        echo $post[$articleType."ID"];
-                        ?>">
+                    </div>  
+                    <div  id="like-input-<?php
+                    echo $articleType;
+                    echo $post[$articleID]
+                    ?>" class="btn-count">
                         <?php
                         if($checkLike > 0){
                             ?>
@@ -142,21 +172,23 @@ foreach($postArray as $post){
                             </button>
                             <?php
                         }
-                        if(count($fetchLike)){
                         ?>
-                            <p class="subtitle-m <?php
-                            if($checkLike > 0){
-                                echo "liked";
-                            }
-                            ?>">
-                            <?php
-                            echo count($fetchLike);
-                            ?>
-                            </p>
-                        <?php
+                        <p id="like-count-<?php
+                        echo $articleType;
+                        echo $post[$articleID];
+                        ?>" class="subtitle-m <?php
+                        if(count($fetchLike) <= 0){
+                            echo "hidden";
                         }
+                        if($checkLike > 0){
+                            echo "liked";
+                        }
+                        ?>">
+                        <?php
+                        echo count($fetchLike);
                         ?>
-                    </form>
+                        </p>
+                    </div>
                     <i class="fas fa-ellipsis-h icon-hover-s"></i>
                 </footer>
             </main>
@@ -164,3 +196,6 @@ foreach($postArray as $post){
     <?php
 }
 ?>
+<div class="ajax-loader"></div>
+<div class="like-loader"></div>
+<div class="repost-loader"></div>

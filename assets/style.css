@@ -335,3 +335,7 @@ main.post header{
         border-right: 1px solid var(--base-color-trans1);
     }
 }
+
+.ascend{
+    transform: translateY(-100%);
+}

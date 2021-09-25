@@ -1,11 +1,12 @@
 <?php
 include "assets/header.php";
 if(isset($_GET["post"])){
-    $likers = $postInteraction->fetchRepost($_GET["post"]);
+    $articleType = "post";
 }
 elseif(isset($_GET["comment"])){
-    $likers = $commentInteraction->fetchRepost($_GET["comment"]);
+    $articleType = "comment";
 }
+$likers = $articleInteraction->fetchLike($_GET[$articleType], $articleType);
 ?>
 <body>
     <?php
