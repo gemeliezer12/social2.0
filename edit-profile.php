@@ -6,7 +6,7 @@ include "assets/header.php";
     <form class="main-body" action="inc/edit-profile.php" method="POST">
         <header class="padding-15 main-header width-100">
             <i class="icon-hover-s fas fa-arrow-left current" onclick="window.history.go(-1); return false;"></i>
-            <input class="btn-m btn-c" type="submit" value="Save">
+            <input class="btn-m btn-c" name="submit" type="submit" value="submit">
         </header>
         <div class="header-margin-top"></div>
         <div class="aspect-3x1" style="background: red;">

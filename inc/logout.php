@@ -1,4 +1,4 @@
 <?php
+include "dbh.php";
 session_unset();
-header("Location: javascript://history.go(-1)");
-exit();
+// header("Location: javascript://history.go(-1)");

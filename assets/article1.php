@@ -25,14 +25,12 @@ foreach($postArray as $post){
     ?>
     <script>
         $(document).ready(function(){
-            // Updates the like and repost count every 5 seconds
             setInterval(function(){
                 $(".ajax-loader").load("ajax/fetch-like.php",{
                     articleID: <?php echo $post[$articleID]?>,
                     type: "<?php echo $articleType?>"
                 });
             }, 5000);
-            // Like and repost without reloading using AJAX and JQUERY
             $("#like-input-<?php
             echo $articleType;
             echo $post[$articleID]
@@ -40,7 +38,7 @@ foreach($postArray as $post){
                 $(".like-loader").load("inc/like.php",{
                 articleID: <?php echo $post[$articleID]?>,
                 posterID: "<?php echo $post["userID"]?>",
-                submit: $(this).attr("name"),
+                submit: $(this).children("button").attr("name"),
                 type: "<?php
                 echo $articleType;
                 ?>"
@@ -49,26 +47,16 @@ foreach($postArray as $post){
             $("#repost-input-<?php
             echo $articleType;
             echo $post[$articleID]
-            ?>").click(function(){
-                
-                $(".repost-loader").load("inc/repost.php",{
-                articleID: <?php echo $post[$articleID]?>,
-                posterID: "<?php echo $post["userID"]?>",
-                submit: $(this).attr("name"),
-                type: "<?php
-                echo $articleType;
-                ?>"
+                ?>").click(function(){
+                    
+                    $(".repost-loader").load("inc/repost.php",{
+                    articleID: <?php echo $post[$articleID]?>,
+                    posterID: "<?php echo $post["userID"]?>",
+                    submit: $(this).children("button").attr("name"),
+                    type: "<?php
+                    echo $articleType;
+                    ?>"
                 });
-            })
-            // Links to the main post page except when Like or Repost is click
-            $("#<?php
-            echo $articleType;
-            echo "-link";
-            echo $post[$articleID];
-            ?>").click(function(e){
-                if(!$(e.target).hasClass("dont-link")){
-                    window.location.href = "http://localhost/social2.0/article.php?<?php echo $articleType?>=<?php echo $post[$articleID]?>";
-                }
             })
         })
     </script>
@@ -131,26 +119,27 @@ foreach($postArray as $post){
                         }
                         ?>
                     </a>
-                    
-                    <button class="btn-count repost-parent dont-link" id="repost-input-<?php
+                    <div id="repost-input-<?php
                     echo $articleType;
                     echo $post[$articleID]
-                    ?>" name="<?php
-                    if($checkRepost > 0){
-                        echo "unsubmit";
-                    }
-                    else{
-                        echo "submit";
-                    }
-                    ?>">
-                        <i class="fa-retweet icon-hover-s <?php
+                    ?>" class="btn-count repost-parent">
+                        <?php
                         if($checkRepost > 0){
-                            echo "fas reposted";
+                            ?>
+                            <button  name="unsubmit" type="submit">
+                                <i class="fas fa-retweet icon-hover-s reposted"></i>
+                            </button>
+                            <?php
                         }
                         else{
-                            echo "fa";
+                            ?>
+                            <button name="submit" type="submit">
+                                <i class="fas fa-retweet icon-hover-s"></i>
+                            </button>
+                            <?php
                         }
-                        ?>"></i>
+
+                        ?>
                         <p id="repost-count-<?php
                         echo $articleType;
                         echo $post[$articleID];
@@ -158,45 +147,51 @@ foreach($postArray as $post){
                         if($checkRepost > 0){
                             echo "reposted";
                         }
-                        ?>"><?php
-                        if(count($fetchRepost)){
-                            echo count($fetchRepost);
+                        if(count($fetchRepost) <= 0){
+                            echo "hidden";
                         }
-                        ?></p>
-                    </button>
-                    <button class="btn-count like-parent" id="like-input-<?php
+                        ?>">
+                        <?php
+                        echo count($fetchRepost);
+                        ?>
+                        </p>
+                    </div>  
+                    <div  id="like-input-<?php
                     echo $articleType;
                     echo $post[$articleID]
-                    ?>" name="<?php
-                    if($checkLike > 0){
-                        echo "unsubmit";
-                    }
-                    else{
-                        echo "submit";
-                    }
-                    ?>">
-                        <i class="fa-heart icon-hover-s  dont-link <?php
+                    ?>" class="btn-count like-parent">
+                        <?php
                         if($checkLike > 0){
-                            echo "fas liked";
+                            ?>
+                            <button name="unsubmit" type="submit">
+                                <i class="fas fa-heart like icon-hover-s liked"></i>
+                            </button>
+                            <?php
                         }
                         else{
-                            echo "far";
+                            ?>
+                            <button name="submit" type="submit">
+                                <i class="far fa-heart like icon-hover-s"></i>
+                            </button>
+                            <?php
                         }
-                        ?>"></i>
+                        ?>
                         <p id="like-count-<?php
                         echo $articleType;
                         echo $post[$articleID];
-                        ?>" class="subtitle-m  dont-link <?php
+                        ?>" class="subtitle-m <?php
+                        if(count($fetchLike) <= 0){
+                            echo "hidden";
+                        }
                         if($checkLike > 0){
                             echo "liked";
                         }
-                        
-                        ?>"><?php
-                        if(count($fetchLike)){
-                            echo count($fetchLike);
-                        }
-                        ?></p>
-                    </button>
+                        ?>">
+                        <?php
+                        echo count($fetchLike);
+                        ?>
+                        </p>
+                    </div>
                     <i class="fas fa-ellipsis-h icon-hover-s"></i>
                 </footer>
             </main>

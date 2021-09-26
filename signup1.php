@@ -4,9 +4,9 @@ if(isset($_SESSION["username"])){
     header("location: home.php");
 }
 ?>
-<body class="index-page">
-    <form class="" action="inc/signup.php" method="POST">
-        <p class="index-title">Signup now</p>
+<body class="sign-up-page">
+    <form class="index logsign" action="inc/signup.php" method="POST">
+        <p class="title">Signup now</p>
         <div class="input-lbl">
             <label for="username">Username</label>
             <input name="username" type="text">
@@ -24,10 +24,10 @@ if(isset($_SESSION["username"])){
             <input name="password-repeat" type="password">
         </div>
         <input name="submit" class="btn-m btn-c no-margin-top" type="submit" value="Sign up">
-        <div class="links">
-            <a class="hover-underline title-s" href="home.php">Forgot password</a>
+        <div class="option">
+            <a class="hover" href="home.php">Forgot password</a>
             <span>·</span>
-            <a class="hover-underline title-s" href="signup.php">Sign up now!</a>
+            <a class="hover" href="signup.php">Log in now!</a>
         </div>
     </form>
 </body>

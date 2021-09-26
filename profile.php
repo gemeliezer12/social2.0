@@ -84,6 +84,20 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
                 echo $profileData["bio"];
                 ?>
             </p>
+            <?php
+            if(!empty($profileData["website"])){
+                ?>
+                <span class="padding-top-10 inline-block">
+                    <i class="fas fa-link fs-18"></i>
+                    <a  class="title-primary-s hover-underline" href="<?php
+                    echo $profileData["website"];
+                    ?>"><?php
+                    echo $profileData["website"];
+                    ?></a>
+                </span>
+                <?php
+            }
+            ?>
             <div class="margin-top-10">
                 <a class="subtitle-s hover-underline" href="relationship.php?following=<?php
                 echo $userData["username"];
@@ -106,9 +120,8 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
         <div class="space"></div>
         <?php
         $postArray = array();
-        $selfPosts = $article->fetchByUser($_SESSION["userID"], "post");
-        foreach($selfPosts as $selfPost){
-            array_push($postArray, $selfPost);
+        foreach($userPost as $result){
+            array_push($postArray, $result);
         }
         ?>
         <main class="posts">

@@ -1,4 +1,5 @@
 <?php
+
 include "assets/header.php";
 if(!isset($_SESSION["username"])){
     header("Location: index.php");
@@ -30,9 +31,10 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
             setInterval(function(){
                 $(".ajax-loader").load("ajax/fetch-like.php",{
                     articleID: <?php echo $mainArticle[$mainArticleID]?>,
-                    type: "<?php echo $mainArticleType?>"
+                    type: "<?php echo $mainArticleType?>",
+                    main: "true"
                 });
-            }, 200);
+            }, 5000);
             $("#like-input-<?php
             echo $mainArticleType;
             echo $mainArticle[$mainArticleID]
@@ -40,10 +42,11 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     $(".like-loader").load("inc/like.php",{
                     articleID: <?php echo $mainArticle[$mainArticleID]?>,
                     posterID: "<?php echo $mainArticle["userID"]?>",
-                    submit: $(this).children("button").attr("name"),
+                    submit: $(this).attr("name"),
                     type: "<?php
                     echo $mainArticleType;
-                    ?>"
+                    ?>",
+                    main: "true"
                 });
             })
             $("#repost-input-<?php
@@ -54,10 +57,11 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     $(".repost-loader").load("inc/repost.php",{
                     articleID: <?php echo $mainArticle[$mainArticleID]?>,
                     posterID: "<?php echo $mainArticle["userID"]?>",
-                    submit: $(this).children("button").attr("name"),
+                    submit: $(this).attr("name"),
                     type: "<?php
                     echo $mainArticleType;
-                    ?>"
+                    ?>",
+                    main: "true"
                 });
             })
         })
@@ -103,55 +107,55 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     echo $time->date($mainArticle["dateCreated"]);
                     ?></span>
                 </div>
-                
-                    <?php
-                    if(count($mainFetchLike) > 0 || count($mainFetchRepost) > 0){
-                        ?>
-                        <div class="padding-y-15 border-top">
-                        <?php
-                        if(count($mainFetchLike) > 0){
-                            ?>
-                            <a class="subtitle-s hover-underline" href="like.php?<?php
-                            echo $mainArticleType;
-                            ?>=<?php
-                            echo $mainArticle[$mainArticleType."ID"];
-                            ?>">
-                                <span id="like-count-<?php
-                                echo $mainArticleType;
-                                echo $mainArticle[$mainArticleID];
-                                ?>"><?php
-                                echo count($mainFetchLike);
-                                ?></span>
-                                Likes
-                            </a>
-                            <?php
-                        }
-                        if(count($mainFetchRepost) > 0){
-                            ?>
-                            <a class="subtitle-s hover-underline" href="repost.php?<?php
-                            echo $mainArticleType;
-                            ?>=<?php
-                            echo $mainArticle[$mainArticleType."ID"];
-                            ?>">
-                                <span><?php
-                                echo count($mainFetchRepost);
-                                ?></span>
-                                Reposts
-                            </a>
-                            <?php
-                        }
-                        ?>
-                        </div>
-                        <?php
+                <div class="padding-y-15 border-top <?php
+                if(count($mainFetchLike) <= 0 && count($mainFetchRepost) <= 0){
+                    echo "hidden";
+                }
+                ?>">
+                    <a class="subtitle-s hover-underline <?php
+                    if(count($mainFetchLike) <= 0){
+                        echo "hidden";
                     }
-                    ?>
+                    ?>" href="like.php?<?php
+                    echo $mainArticleType;
+                    ?>=<?php
+                    echo $mainArticle[$mainArticleType."ID"];
+                    ?>">
+                        <span id="like-count-<?php
+                        echo $mainArticleType;
+                        echo $mainArticle[$mainArticleID];
+                        ?>"><?php
+                        echo count($mainFetchLike);
+                        ?></span>
+                        Likes
+                    </a>
+
+                    <a class="subtitle-s hover-underline <?php
+                    if(count($mainFetchRepost) <= 0){
+                        echo "hidden";
+                    }
+                    ?>" href="repost.php?<?php
+                    echo $mainArticleType;
+                    ?>=<?php
+                    echo $mainArticle[$mainArticleType."ID"];
+                    ?>">
+                        <span id="repost-count-<?php
+                        echo $mainArticleType;
+                        echo $mainArticle[$mainArticleID];
+                        ?>"><?php
+                        echo count($mainFetchRepost);
+                        ?></span>
+                        Reposts
+                    </a>
+                </div>
                 
                 <footer class="width-100 post-btns border-top padding-y-6">
-                    <a href="">
+                    <footer class="width-100 post-btns margin-top-6">
+                    <a class="btn-count comment-parent" href="">
                         <?php
                         if($mainCheckComment > 0){
                             ?>
-                            <i class="fas fa-comment icon-hover-s current"></i>
+                            <i class="fas fa-comment icon-hover-s commented"></i>
                             <?php
                         }
                         else{
@@ -161,50 +165,49 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                         }
                         ?>
                     </a>
-                    <div id="repost-input-<?php
+                    
+                    <button id="repost-input-<?php
                     echo $mainArticleType;
-                    echo $mainArticle[$mainArticleID]
-                    ?>" action="inc/repost.php" method="POST">
-                        <?php
+                    echo $mainArticle[$mainArticleID];
+                    ?>" name="<?php
+                    if($mainCheckRepost > 0){
+                        echo "unsubmit";
+                    }
+                    else{
+                        echo "submit";
+                    }
+                    ?>">
+                        <i class="fa-retweet icon-hover-s <?php
                         if($mainCheckRepost > 0){
-                            ?>
-                            <button name="unsubmit" type="submit">
-                                <i class="fas fa-retweet icon-hover-s reposted"></i>
-                            </button>
-                            <?php
+                            echo "fas reposted";
                         }
                         else{
-                            ?>
-                            <button name="submit" type="submit">
-                                <i class="fas fa-retweet icon-hover-s"></i>
-                            </button>
-                            <?php
+                            echo "fa";
                         }
-                        
-                        ?>
-                    </div>
-                    <div id="like-input-<?php
+                        ?>"></i>
+                    </button>
+                    <button id="like-input-<?php
                     echo $mainArticleType;
                     echo $mainArticle[$mainArticleID]
-                    ?>" action="inc/like.php" method="POST">
-                        <?php
+                    ?>" name="<?php
+                    if($mainCheckLike > 0){
+                        echo "unsubmit";
+                    }
+                    else{
+                        echo "submit";
+                    }
+                    ?>">
+                        <i class="fa-heart icon-hover-s <?php
                         if($mainCheckLike > 0){
-                            ?>
-                            <button id="unsubmit" name="unsubmit" type="submit">
-                                <i class="fas fa-heart icon-hover-s liked"></i>
-                            </button>
-                            <?php
+                            echo "fas liked";
                         }
                         else{
-                            ?>
-                            <button id="submit" name="submit" type="submit">
-                                <i class="far fa-heart icon-hover-s"></i>
-                            </button>
-                            <?php
+                            echo "far";
                         }
-                        ?>
-                    </div>
+                        ?>"></i>
+                    </button>
                     <i class="fas fa-ellipsis-h icon-hover-s"></i>
+                </footer>
                 </footer>
             </div>
         </main>
@@ -255,5 +258,6 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
             ?>
         </main>
     </main>
+    <div class="main-ajax-loader"></div>
 </body>
 </html>

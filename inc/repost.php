@@ -9,13 +9,14 @@ $articleID = $_POST["articleID"];
 $type = $_POST["type"];
 $submit = $_POST["submit"];
 
+
 if($submit == "submit"){
     ?>
     <script>
         $("#repost-input-<?php
         echo $type;
         echo $articleID
-        ?>").children("button").attr("name", "unsubmit")
+        ?>").attr("name", "unsubmit")
     </script>
     <?php
     if($type == "post"){
@@ -71,7 +72,7 @@ elseif($submit == "unsubmit"){
         $("#repost-input-<?php
         echo $type;
         echo $articleID
-        ?>").children("button").attr("name", "submit")
+        ?>").attr("name", "submit")
     </script>
     <?php
     if($type == "post"){
@@ -101,42 +102,95 @@ elseif($submit == "unsubmit"){
         $query->execute();
     }
 }
+$fetchLike = $articleInteraction->fetchLike($articleID, $type);
+$countLike = count($fetchLike);
 $fetchRepost = $articleInteraction->fetchRepost($articleID, $type);
-if(count($fetchRepost) <= 0){
+$countRepost = count($fetchRepost);
+?>
+<script>
+repost = $("#repost-input-<?php
+echo $type;
+echo $articleID
+?>").attr("name")
+$("#repost-count-<?php
+echo $type;
+echo $articleID;
+?>").text(<?php
+echo $countRepost;
+?>)
+
+// If reposted
+if(repost == "submit"){
+    $("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>").removeClass("reposted")
+    $("#repost-input-<?php
+    echo $type;
+    echo $articleID;
+    ?>").children("i").removeClass("reposted fas");
+    $("#repost-input-<?php
+    echo $type;
+    echo $articleID;
+    ?>").children("i").addClass("fa");
+}
+// If not reposted
+else if(repost == "unsubmit"){
+    $("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>").addClass("reposted")
+    $("#repost-input-<?php
+    echo $type;
+    echo $articleID;
+    ?>").children("i").addClass("reposted fas");
+    $("#repost-input-<?php
+    echo $type;
+    echo $articleID;
+    ?>").children("i").removeClass("fa");
+}
+
+<?php
+if($countRepost > 0){
     ?>
-    <script>
-        $("#repost-count-<?php
-        echo $type;
-        echo $_POST["articleID"];
-        ?>").addClass("hidden")
-    </script>
+    console.log($("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>"));
+    $("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>").removeClass("hidden")
+    $("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>").parent("a").removeClass("hidden")
+    $("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>").parent("a").parent("div").removeClass("hidden")
+    
     <?php
 }
 else{
     ?>
-    <script>
-        $("#repost-count-<?php
-        echo $type;
-        echo $_POST["articleID"];
-        ?>").removeClass("hidden")
-    </script>
+    $("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>").addClass("hidden")
+    $("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>").parent("a").addClass("hidden")
+    <?php
+}
+if($countRepost <= 0 && $countLike <= 0){
+    ?>
+    $("#repost-count-<?php
+    echo $type;
+    echo $articleID;
+    ?>").parent("a").parent("div").addClass("hidden")
     <?php
 }
 ?>
-
-<script>
-        $("#repost-count-<?php
-        echo $type;
-        echo $_POST["articleID"];
-        ?>").toggleClass("reposted")
-        $("#repost-input-<?php
-        echo $type;
-        echo $articleID
-        ?>").children("button").children("i").toggleClass("reposted fas fa")
-        $("#repost-count-<?php
-        echo $type;
-        echo $_POST["articleID"];
-        ?>").text(<?php
-        echo count($fetchRepost)
-        ?>);
 </script>

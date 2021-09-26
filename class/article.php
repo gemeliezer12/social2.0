@@ -25,7 +25,6 @@ class Article{
             $query = $pdo->prepare("SELECT * FROM comments WHERE userID=?");
             $query->bindValue(1, $userID);
             $query->execute();
-
         }
         return $query->fetchAll();
     }

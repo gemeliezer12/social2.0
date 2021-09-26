@@ -185,8 +185,24 @@ body.edit-profile{
     margin-top: 26px;
 }
 
-.index-page .links a{
+.title-primary-xs{
     color: var(--primary-color1);
+    font-size: 14px;
+}
+
+.title-primary-s{
+    color: var(--primary-color1);
+    font-size: 16px;
+}
+
+.title-primary-m{
+    color: var(--primary-color1);
+    font-size: 18px;
+}
+
+.title-primary-l{
+    color: var(--primary-color1);
+    font-size: 20px;
 }
 
 .index-page form .btn-m{
@@ -238,19 +254,37 @@ footer.post-btns{
     color: var(--base-color-trans3);
 } */
 
-footer .icon-hover-s{
-    color: var(--base-color-trans3);
-    transition: color 0.2s ease;
-    transition: background 0.2s ease;
-}
-
-i.fa-heart:hover{
+.like-parent:hover i{
     color: rgba(220, 20, 60);
     background: rgba(220, 20, 60, var(--opacity-1));
 }
 
-footer i.liked{
+.repost-parent:hover i{
+    color: rgba(30, 225, 30);
+    background: rgba(30, 225, 30, var(--opacity-1));
+} 
+
+.like-parent:hover p{
     color: rgba(220, 20, 60);
+}
+
+.repost-parent:hover p{
+    color: rgba(30, 225, 30);
+} 
+
+.comment-parent:hover i{
+    color: rgba(30, 175, 225);
+    background: rgba(30, 175, 225, var(--opacity-1));
+} 
+
+.comment-parent:hover p{
+    color: rgba(30, 175, 225);
+} 
+
+footer .icon-hover-s{
+    color: var(--base-color-trans3);
+    transition: color 0.2s ease;
+    transition: background 0.2s ease;
 }
 
 footer .liked{
@@ -259,24 +293,6 @@ footer .liked{
 
 footer .commented{
     color: rgba(30, 175, 225);
-}
-
-i.fa-comment:hover{
-    color: rgba(30, 175, 225);
-    background: rgba(30, 175, 225, var(--opacity-1));
-}
-
-footer .commented{
-    color: rgba(30, 175, 225);
-}
-
-i.fa-retweet:hover{
-    color: rgba(30, 225, 30);
-    background: rgba(30, 225, 30, var(--opacity-1));
-}
-
-footer i.reposted{
-    color: rgba(30, 225, 30);;
 }
 
 footer .reposted{

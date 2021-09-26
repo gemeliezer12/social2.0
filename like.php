@@ -1,10 +1,10 @@
 <?php
 include "assets/header.php";
 if(isset($_GET["post"])){
-    $likers = $postInteraction->fetchLike($_GET["post"]);
+    $likers = $articleInteraction->fetchLike($_GET["post"], "post");
 }
 elseif(isset($_GET["comment"])){
-    $likers = $commentInteraction->fetchLike($_GET["comment"]);
+    $likers = $articleInteraction->fetchLike($_GET["comment"], "comment");
 }
 ?>
 <body>
