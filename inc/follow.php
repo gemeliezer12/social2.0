@@ -1,8 +1,19 @@
 <?php
 include "dbh.php";
+include "../class/relationship.php";
+
+$relationship = new Relationship;
 $follower = $_SESSION["userID"];
-if(isset($_POST["submit"])){
-    $following = $_POST["following"];
+$following = $_POST["following"];
+$submit = $_POST["submit"];
+if($submit == "submit"){
+    ?>
+    <script>
+        $("#follow-input<?php
+                echo $following;
+                ?>").attr("name", "unsubmit")
+    </script>
+    <?php
 
     $query = $pdo->prepare("SELECT * FROM relationships WHERE followingID=? AND followerID=?");
     $query->bindValue(1, $following);
@@ -16,8 +27,14 @@ if(isset($_POST["submit"])){
         $query->execute();
     }
 }
-elseif(isset($_POST["unsubmit"])){
-    $following = $_POST["following"];
+elseif($submit == "unsubmit"){
+    ?>
+    <script>
+        $("#follow-input<?php
+                echo $following;
+                ?>").attr("name", "submit")
+    </script>
+    <?php
 
 
     $query = $pdo->prepare("DELETE FROM relationships WHERE followingID=? AND followerID=?");
@@ -25,10 +42,32 @@ elseif(isset($_POST["unsubmit"])){
     $query->bindValue(2, $follower);
     $query->execute();
 }
-$query = $pdo->prepare("SELECT username FROM users WHERE userID=?;");
-$query->bindValue(1, $following);
-$query->execute();
-$result = $query->fetch();
-$username = $result["username"];
-header("Location: ../profile.php?username=$username");
-exit();
+$followerCount = count($relationship->fetchFollower($following));
+?>
+<script>
+$(".follower-count").text("<?php
+echo $followerCount;
+?>");
+    <?php
+    if($submit == "submit"){
+        ?>
+        $("#follow-input<?php
+                echo $following;
+                ?>").toggleClass("btn-c btn-t hover-color");
+        $("#follow-input<?php
+                echo $following;
+                ?>").val("Following");
+        <?php
+    }
+    elseif($submit == "unsubmit"){
+        ?>
+        $("#follow-input<?php
+                echo $following;
+                ?>").toggleClass("btn-c btn-t hover-color");
+        $("#follow-input<?php
+                echo $following;
+                ?>").val("Follow");
+        <?php
+    }
+    ?>
+</script>

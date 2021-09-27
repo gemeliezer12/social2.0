@@ -24,7 +24,7 @@
     --opacity-4: 0.02;
     --bg-color: rgba(20, 25, 30);
 
-    --base-color: rgba(0, 0, 0);
+    /* --base-color: rgba(0, 0, 0);
     --base-color-trans1: rgba(0, 0, 0, 0);
     --base-color-trans2: rgba(0, 0, 0, 0.8);
     --base-color-trans3: rgba(0, 0, 0, 0.6);
@@ -43,7 +43,7 @@
     --opacity-2: 0.8;
     --opacity-3: 0.6;
     --opacity-4: 0;
-    --bg-color: white;
+    --bg-color: white; */
     
     --main-font: 'Roboto', sans-serif;
 }
@@ -471,4 +471,8 @@ img{
 
 .radius-200{
     border-radius: 200px;
+}
+
+.flex-start{
+    align-items: flex-start;
 }

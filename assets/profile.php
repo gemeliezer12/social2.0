@@ -5,11 +5,37 @@
         $profileData = $profile->fetchData($userID);
         $checkFollow = $relationship->checkFollow($userID, $_SESSION["userID"]);
         ?>
+        <script>
+            $(document).ready(function(){
+                $("#follow-input<?php
+                echo $userData["userID"];
+                ?>").click(function(){
+                    $(".follow-loader").load("inc/follow.php",{
+                        follower: <?php
+                        echo $_SESSION["userID"]
+                        ?>,
+                        following: <?php
+                        echo $userData["userID"]
+                        ?>,
+                        submit: $("#follow-input<?php
+                        echo $userData["userID"];
+                        ?>").attr("name")
+                    });
+                })
+                $("#profile-link<?php
+                echo $userID;
+                ?>").click(function(e){
+                    if(!$(e.target).hasClass("dont-link")){
+                        window.location.href = "http://localhost/social2.0/profile.php?username=<?php echo $userID?>";
+                    }
+                })
+            })
+        </script>
         
-        <article class="padding-15 padding-y-6 border-bottom" id="profile-link-select" onclick="location.href='profile.php?username=<?php
-        echo $userData["username"];
-        ?>';">
-            <main style="display: flex;">
+        <article class="padding-15 padding-y-6 border-bottom flex-start" id="profile-link<?php
+        echo $userID;
+        ?>">
+            <main class="flex">
                 <aside class="side-profile margin-right-10 profile-picture-50">
                     <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
                 </aside>
@@ -25,24 +51,30 @@
                 </div>
             </main>
             <?php
-            if($userID !== $_SESSION["userID"]){
-                ?>
-                <form method="POST" action="inc/follow.php">
-                    <input type="hidden" name="following" value=<?php
-                    echo $userID;
-                    ?>>
-                    <?php if($checkFollow === 0){
-                        ?>
-                        <input type="submit" name="submit" class="btn-m btn-t" value="Follow">
-                        <?php
-                    }
-                    elseif($checkFollow > 0){
-                        ?>
-                        <input type="submit" name="unsubmit" class="btn-m btn-c hover-color" value="Following">
-                        <?php
-                    }
+            if(isset($_SESSION["userID"])){
+                if($_SESSION["userID"] === $userData["userID"]){
+                }
+                else{
                     ?>
-                </form>
+                    <input id="follow-input<?php
+                        echo $userData["userID"];
+                    ?>" type="submit" name="<?php
+                    if($checkFollow === 0){
+                        echo "submit"
+                        ?>" class="btn-m btn-t following dont-link" value="Follow">
+                        <?php
+                    }
+                    else{
+                        echo "unsubmit"
+                        ?>" class="btn-m btn-c hover-color following dont-link" value="Following">
+                        <?php
+                    }
+                    
+                }
+            }
+            else{
+                ?>
+                <a href="index.php">Follow</a>
                 <?php
             }
             ?>
@@ -51,3 +83,5 @@
     }
     ?>
 </main>
+
+<div class="follow-loader"></div>

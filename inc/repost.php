@@ -153,10 +153,6 @@ else if(repost == "unsubmit"){
 <?php
 if($countRepost > 0){
     ?>
-    console.log($("#repost-count-<?php
-    echo $type;
-    echo $articleID;
-    ?>"));
     $("#repost-count-<?php
     echo $type;
     echo $articleID;

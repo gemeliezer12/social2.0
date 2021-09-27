@@ -102,7 +102,7 @@ foreach($postArray as $post){
                 </article>
                 
                 <footer class="width-100 post-btns margin-top-6">
-                    <a class="btn-count comment-parent" href="">
+                    <a class="btn-count comment-parent">
                         <?php
                         if($checkComment > 0){
                             ?>
@@ -132,7 +132,7 @@ foreach($postArray as $post){
                         ?>
                     </a>
                     
-                    <button class="btn-count repost-parent dont-link" id="repost-input-<?php
+                    <button class="btn-count repost-parent" id="repost-input-<?php
                     echo $articleType;
                     echo $post[$articleID]
                     ?>" name="<?php
@@ -143,7 +143,7 @@ foreach($postArray as $post){
                         echo "submit";
                     }
                     ?>">
-                        <i class="fa-retweet icon-hover-s <?php
+                        <i class="fa-retweet icon-hover-s  dont-link <?php
                         if($checkRepost > 0){
                             echo "fas reposted";
                         }
@@ -154,7 +154,7 @@ foreach($postArray as $post){
                         <p id="repost-count-<?php
                         echo $articleType;
                         echo $post[$articleID];
-                        ?>" class="subtitle-m <?php
+                        ?>" class="subtitle-m  dont-link <?php
                         if($checkRepost > 0){
                             echo "reposted";
                         }

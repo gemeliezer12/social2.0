@@ -1,1 +1,0 @@
-onclick="location.href='article.php?<?php echo $articleType?>=<?php echo $post[$articleID]?>';"

@@ -6,7 +6,7 @@ if(isset($_GET["post"])){
 elseif(isset($_GET["comment"])){
     $articleType = "comment";
 }
-$likers = $articleInteraction->fetchLike($_GET[$articleType], $articleType);
+$reposters = $articleInteraction->fetchRepost($_GET[$articleType], $articleType);
 ?>
 <body>
     <?php
@@ -23,8 +23,8 @@ $likers = $articleInteraction->fetchLike($_GET[$articleType], $articleType);
         <div class="header-margin-top"></div>
         <?php
             $userIDs = array();
-            foreach($likers as $liker){
-                array_push($userIDs, $liker["postedID"]);
+            foreach($reposters as $reposter){
+                array_push($userIDs, $reposter["postedID"]);
             }
             include "assets/profile.php";
         ?>

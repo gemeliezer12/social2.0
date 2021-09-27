@@ -13,7 +13,7 @@ class Relationship{
     public function fetchFollower($userID){
         global $pdo;
 
-        $query = $pdo->prepare("SELECT * FROM relationships WHERE followerID=?");
+        $query = $pdo->prepare("SELECT * FROM relationships WHERE followingID=?");
         $query->bindValue(1, $userID);
         $query->execute();
         

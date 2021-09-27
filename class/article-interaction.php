@@ -72,4 +72,21 @@ class ArticleInteraction{
         }
         return $query->fetchAll();
     }
+
+    public function fetchRepostByUser($postedID, $type){
+        global $pdo;
+        if($type == "post"){
+            $query = $pdo->prepare("SELECT * FROM postinteractions WHERE postedID=? AND reposted=?");
+            $query->bindValue(1, $postedID);
+            $query->bindValue(2, true);
+            $query->execute();
+        }
+        elseif($type == "comment"){
+            $query = $pdo->prepare("SELECT * FROM commentinteractions WHERE postedID=? AND reposted=?");
+            $query->bindValue(1, $postedID);
+            $query->bindValue(2, true);
+            $query->execute();
+        }
+        return $query->fetchAll();
+    }
 }

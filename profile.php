@@ -14,6 +14,25 @@ $following = $relationship->fetchFollowing($userData["userID"]);
 $follower = $relationship->fetchFollower($userData["userID"]);
 $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID"]);
 ?>
+<script>
+    $(document).ready(function(){
+        $("#follow-input<?php
+        echo $userData["userID"];
+        ?>").click(function(){
+            $(".follow-loader").load("inc/follow.php",{
+                follower: <?php
+                echo $_SESSION["userID"]
+                ?>,
+                following: <?php
+                echo $userData["userID"]
+                ?>,
+                submit: $("#follow-input<?php
+                echo $userData["userID"];
+                ?>").attr("name")
+            });
+        })
+    })
+</script>
 <body>
     <?php
         include "assets/sidebar.php";
@@ -40,38 +59,38 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
                 <a class="aspect-1x1" href="">
                     <img src="profiles/profile-picture/default.png" alt="">
                 </a>
-                <form action="inc/follow.php" method="POST">
-                    <input type="hidden" name="following" value="<?php
-                    echo $userData["userID"];
-                    ?>">
-                    <?php
-                    if(isset($_SESSION["userID"])){
-                        if($_SESSION["userID"] === $userData["userID"]){
-                            ?>
-                            <a class="btn-m btn-t" href="edit-profile.php">Edit profile</a>
-                            <?php
-                        }
-                        else{
-                            if($checkFollow === 0){
-                                ?>
-                                <input type="submit" name="submit" class="btn-m btn-t" value="Follow">
-                                <?php
-                            }
-                            elseif($checkFollow > 0){
-                                ?>
-                                <input type="submit" name="unsubmit" class="btn-m btn-c hover-color" value="Following">
-                                <?php
-                            }
-                        }
+                <?php
+                if(isset($_SESSION["userID"])){
+                    if($_SESSION["userID"] === $userData["userID"]){
+                        ?>
+                        <a class="btn-m btn-t" href="edit-profile.php">Edit profile</a>
+                        <?php
                     }
                     else{
                         ?>
-                        <a href="index.php">Follow</a>
-                        <?php
+                        <input id="follow-input<?php
+                            echo $userData["userID"];
+                        ?>" type="submit" name="<?php
+                        if($checkFollow === 0){
+                            echo "submit"
+                            ?>" class="btn-m btn-t following" value="Follow">
+                            <?php
+                        }
+                        else{
+                            echo "unsubmit"
+                            ?>" class="btn-m btn-c hover-color following" value="Following">
+                            <?php
+                        }
+                        
                     }
-                    
+                }
+                else{
                     ?>
-                </form>
+                    <a href="index.php">Follow</a>
+                    <?php
+                }
+                
+                ?>
             </div>
             <p class="title-l margin-top-6"><?php
             echo $profileData["name"];
@@ -110,7 +129,7 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
                 <a class="subtitle-s hover-underline" href="relationship.php?follower=<?php
                 echo $userData["username"];
                 ?>">
-                    <span><?php
+                    <span class="follower-count"><?php
                     echo count($follower);
                     ?></span>
                     Followers
@@ -132,3 +151,5 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
     </main>
 </body>
 </html>
+
+<div class="follow-loader"></div>

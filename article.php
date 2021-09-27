@@ -151,7 +151,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                 
                 <footer class="width-100 post-btns border-top padding-y-6">
                     <footer class="width-100 post-btns margin-top-6">
-                    <a class="btn-count comment-parent" href="">
+                    <a class="btn-count comment-parent">
                         <?php
                         if($mainCheckComment > 0){
                             ?>
@@ -166,7 +166,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                         ?>
                     </a>
                     
-                    <button id="repost-input-<?php
+                    <button class="repost-parent" id="repost-input-<?php
                     echo $mainArticleType;
                     echo $mainArticle[$mainArticleID];
                     ?>" name="<?php
@@ -186,7 +186,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                         }
                         ?>"></i>
                     </button>
-                    <button id="like-input-<?php
+                    <button class="like-parent" id="like-input-<?php
                     echo $mainArticleType;
                     echo $mainArticle[$mainArticleID]
                     ?>" name="<?php
