@@ -1,1 +1,0 @@
-SELECT * FROM posts WHERE idFollowing=? OR ?

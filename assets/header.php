@@ -4,7 +4,7 @@ include "class/user.php";
 include "class/profile.php";
 include "class/relationship.php";
 include "class/article.php";
-include "class/article-interaction.php";
+include "class/like.php";
 include "class/time.php";
 include "class/search.php";
 
@@ -12,7 +12,7 @@ $user = new User;
 $profile = new Profile;
 $relationship = new Relationship;
 $article = new Article;
-$articleInteraction = new ArticleInteraction;
+$like = new Like;
 $time = new Time;
 $search = new Search;
 

@@ -1,9 +1,11 @@
 <?php
 include "../inc/dbh.php";
-include "../class/article-interaction.php";
-$articleInteraction = new ArticleInteraction;
-$fetchLike = $articleInteraction->fetchLike($_POST["articleID"], $_POST["type"]);
-$fetchRepost = $articleInteraction->fetchRepost($_POST["articleID"], $_POST["type"]);
+include "../class/like.php";
+$like = new Like;
+include "../class/article.php";
+$article = new Article;
+$fetchLike = $like->fetchLike($_POST["articleID"], $_POST["type"]);
+$fetchRepost = $article->fetchByReposted($_POST["articleID"], $_POST["type"]);
 
 ?>
 <script>

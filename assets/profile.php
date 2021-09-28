@@ -1,4 +1,4 @@
-<main class="profile-list">
+<main class="column">
     <?php
     foreach($userIDs as $userID){
         $userData = $user->fetchData($userID);
@@ -32,7 +32,7 @@
             })
         </script>
         
-        <article class="padding-15 padding-y-6 border-bottom flex-start" id="profile-link<?php
+        <article class="padding-15 padding-y-6 border-bottom flex-start hover-base-4 space-between" id="profile-link<?php
         echo $userID;
         ?>">
             <main class="flex">

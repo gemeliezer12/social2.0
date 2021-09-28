@@ -15,10 +15,10 @@ elseif(isset($_GET["comment"])){
 $mainArticle = $article->fetchByArticle($_GET[$mainArticleType], $mainArticleType);
 $mainUser = $user->fetchData($mainArticle["userID"]);
 $mainProfile = $profile->fetchData($mainArticle["userID"]);
-$mainCheckLike = $articleInteraction->checkLike($_SESSION["userID"], $mainArticle[$mainArticleType."ID"], $mainArticleType);
-$mainFetchLike = $articleInteraction->fetchLike($mainArticle[$mainArticleType."ID"], $mainArticleType);
-$mainCheckRepost = $articleInteraction->checkRepost($_SESSION["userID"], $mainArticle[$mainArticleType."ID"], $mainArticleType);
-$mainFetchRepost = $articleInteraction->fetchRepost($mainArticle[$mainArticleType."ID"], $mainArticleType);
+$mainCheckLike = $like->checkLike($_SESSION["userID"], $mainArticle[$mainArticleType."ID"], $mainArticleType);
+$mainFetchLike = $like->fetchLike($mainArticle[$mainArticleType."ID"], $mainArticleType);
+$mainCheckRepost = $article->checkReposted($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
+$mainFetchRepost = $article->fetchByReposted($mainArticle[$mainArticleType."ID"], $mainArticleType);
 $mainCheckComment = $article->checkCommented($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
 $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID"], $mainArticleType);
 ?>
@@ -35,7 +35,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     main: "true"
                 });
             }, 5000);
-            $("#like-input-<?php
+            $(".like-input-<?php
             echo $mainArticleType;
             echo $mainArticle[$mainArticleID]
                 ?>").click(function(){
@@ -49,7 +49,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     main: "true"
                 });
             })
-            $("#repost-input-<?php
+            $(".repost-input-<?php
             echo $mainArticleType;
             echo $mainArticle[$mainArticleID]
                 ?>").click(function(){
@@ -121,7 +121,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     ?>=<?php
                     echo $mainArticle[$mainArticleType."ID"];
                     ?>">
-                        <span id="like-count-<?php
+                        <span class="like-count-<?php
                         echo $mainArticleType;
                         echo $mainArticle[$mainArticleID];
                         ?>"><?php
@@ -139,7 +139,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     ?>=<?php
                     echo $mainArticle[$mainArticleType."ID"];
                     ?>">
-                        <span id="repost-count-<?php
+                        <span class="repost-count-<?php
                         echo $mainArticleType;
                         echo $mainArticle[$mainArticleID];
                         ?>"><?php
@@ -150,7 +150,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                 </div>
                 
                 <footer class="width-100 post-btns border-top padding-y-6">
-                    <footer class="width-100 post-btns margin-top-6">
+                    <footer class="width-100 post-btns">
                     <a class="btn-count comment-parent">
                         <?php
                         if($mainCheckComment > 0){
@@ -166,7 +166,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                         ?>
                     </a>
                     
-                    <button class="repost-parent" id="repost-input-<?php
+                    <button class="repost-parent repost-input-<?php
                     echo $mainArticleType;
                     echo $mainArticle[$mainArticleID];
                     ?>" name="<?php
@@ -186,7 +186,7 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                         }
                         ?>"></i>
                     </button>
-                    <button class="like-parent" id="like-input-<?php
+                    <button class="like-parent like-input-<?php
                     echo $mainArticleType;
                     echo $mainArticle[$mainArticleID]
                     ?>" name="<?php

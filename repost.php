@@ -6,7 +6,7 @@ if(isset($_GET["post"])){
 elseif(isset($_GET["comment"])){
     $articleType = "comment";
 }
-$reposters = $articleInteraction->fetchRepost($_GET[$articleType], $articleType);
+$reposters = $article->fetchByReposted($_GET[$articleType], $articleType);
 ?>
 <body>
     <?php
@@ -24,7 +24,7 @@ $reposters = $articleInteraction->fetchRepost($_GET[$articleType], $articleType)
         <?php
             $userIDs = array();
             foreach($reposters as $reposter){
-                array_push($userIDs, $reposter["postedID"]);
+                array_push($userIDs, $reposter["userID"]);
             }
             include "assets/profile.php";
         ?>

@@ -1,12 +1,16 @@
 <?php
 include "assets/header.php";
 if(isset($_GET["following"])){
+    $relation = "following";
+    $relationID = "followingID";
     $userData = $user->fetchData($_GET["following"]);
     $users = $relationship->fetchFollowing($userData["userID"]);
 }
 elseif(isset($_GET["follower"])){
+    $relation = "follower";
+    $relationID = "followerID";
     $userData = $user->fetchData($_GET["follower"]);
-    $users = $relationship->fetchfollower($userData["userID"]);
+    $users = $relationship->fetchFollower($userData["userID"]);
 }
 $profileData = $profile->fetchData($userData["userID"]);
 ?>
@@ -42,7 +46,7 @@ $profileData = $profile->fetchData($userData["userID"]);
             <?php
             $userIDs = array();
             foreach($users as $userResult){
-                array_push($userIDs, $userResult["followingID"]);
+                array_push($userIDs, $userResult[$relationID]);
             }
             include "assets/profile.php";
             ?>

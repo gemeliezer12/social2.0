@@ -1,10 +1,10 @@
 <?php
 include "assets/header.php";
 if(isset($_GET["post"])){
-    $likers = $articleInteraction->fetchLike($_GET["post"], "post");
+    $likers = $like->fetchLike($_GET["post"], "post");
 }
 elseif(isset($_GET["comment"])){
-    $likers = $articleInteraction->fetchLike($_GET["comment"], "comment");
+    $likers = $like->fetchLike($_GET["comment"], "comment");
 }
 ?>
 <body>
@@ -23,7 +23,7 @@ elseif(isset($_GET["comment"])){
         <?php
             $userIDs = array();
             foreach($likers as $liker){
-                array_push($userIDs, $liker["postedID"]);
+                array_push($userIDs, $liker["userID"]);
             }
             include "assets/profile.php";
         ?>

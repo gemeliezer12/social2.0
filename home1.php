@@ -61,24 +61,19 @@ if(!isset($_SESSION["username"])){
         }
 
         $repostID = array();
-        $recommentID = array();
         $query = $pdo->prepare("SELECT * FROM reposts WHERE userID IN ($r) AND dateCreated>=?");
         $query->bindValue(1, $postTime[0]);
         $query->execute();
         $results = $query->fetchAll();
         
         foreach($results as $result){
-            if(!empty($result["repostedPost"])){
-                array_push($repostID, $result["repostedPost"]);
-            }
-            if(!empty($result["repostedComment"])){
-                array_push($recommentID, $result["repostedComment"]);
-            }
+            array_push($repostID, $result["repostedPost"]);
         }
-        
-        
+
+        $repostID = array_unique($repostID);
+        print_r($repostID);
+
         foreach($repostID as $result){
-            $repostID = array_unique($repostID);
             $query = $pdo->prepare("SELECT * FROM posts WHERE postID=?");
             $query->bindValue(1, $result);
             $query->execute();
@@ -87,25 +82,8 @@ if(!isset($_SESSION["username"])){
             $query->bindValue(1, $result);
             $query->execute();
             array_push($results, $query->fetch());
-            
+
             array_push($postArray, $results);
-        }
-        if(count($recommentID) > 0){
-            
-            $recommentID = array_unique($recommentID);
-            
-            foreach($recommentID as $result){
-                $query = $pdo->prepare("SELECT * FROM comments WHERE commentID=?");
-                $query->bindValue(1, $result);
-                $query->execute();
-                $results = $query->fetch();
-                $query = $pdo->prepare("SELECT * FROM reposts WHERE repostedComment=? AND userID in ($r) ORDER BY dateCreated DESC LIMIT 1");
-                $query->bindValue(1, $result);
-                $query->execute();
-                $results[4] = $query->fetch();
-  
-                array_push($postArray, $results);
-            }
         }
         ?>
         <main class="posts">

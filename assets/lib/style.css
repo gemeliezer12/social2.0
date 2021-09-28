@@ -335,7 +335,7 @@ button{
 }
 
 .margin-bottom-6{
-    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
 .padding-15{
@@ -475,4 +475,13 @@ img{
 
 .flex-start{
     align-items: flex-start;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+}
+
+script{
+    display: none;
 }

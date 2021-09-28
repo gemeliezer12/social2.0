@@ -314,7 +314,7 @@ footer .reposted{
     cursor: pointer;
 }
 
-.profile-list article:hover{
+.hover-base-4:hover{
     background-color: var(--base-color-trans4);
 }
 

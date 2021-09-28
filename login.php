@@ -17,9 +17,9 @@ if(isset($_SESSION["username"])){
         </div>
         <input name="submit" class="btn-m btn-c no-margin-top" type="submit" value="Log in">
         <div class="links">
-            <a class="hover-underline title-s" href="home.php">Forgot password</a>
+            <a class="hover-underline title-primary-s" href="home.php">Forgot password</a>
             <span>·</span>
-            <a class="hover-underline title-s" href="signup.php">Sign up now!</a>
+            <a class="hover-underline title-primary-s" href="signup.php">Sign up now!</a>
         </div>
     </form>
 </body>
