@@ -1,31 +1,18 @@
+SELECT "repost" as type, p.userID, postID, p.content, r.dateCreated FROM posts p JOIN reposts r ON p.postID=r.repostedPost 
+UNION SELECT "post" as type, p.userID, postID, p.content, p.dateCreated FROM posts p;
 
-SELECT * FROM posts p JOIN 
-reposts r ON p.postID=r.repostedPost UNION
-SELECT userID, postID, content, dateCreated, null as userID,
-null as repostID, null as content, null as dateCreated, null as repostedPost, null as repostedComment, null as repostedUser FROM posts p
+SELECT "repostComment" as type, p.userID, postID as articleID, p.content, r.dateCreated FROM posts p JOIN reposts r ON p.postID=r.repostedPost 
+UNION 
+SELECT "repostPost" as type, c.userID, commentID as articleID, c.content, r.dateCreated FROM comments c JOIN reposts r ON c.commentID=r.repostedPost
 
-SELECT * FROM posts p JOIN 
-reposts r ON 
-p.postID=r.repostedPost UNION ALL 
-SELECT userID, postID, content, dateCreated,
-null as reposterID, null as repostID, null as repostContent, null as dateReposted, null as repostedPost, null as repostedComment, null as repostedUser 
-FROM posts p 
-WHERE userID in (1, 2, 3);
+SELECT "repostComment" as type, p.userID, postID as articleID, p.content, r.dateCreated, r.userID FROM posts p JOIN reposts r ON p.postID=r.repostedPost
+UNION 
+SELECT "repostPost" as type, c.userID, commentID as articleID, c.content, r.dateCreated, r.userID FROM comments c JOIN reposts r ON c.commentID=r.repostedComment
+UNION
+SELECT "post" as type, p.userID, postID, p.content, p.dateCreated, null as userID FROM posts p;
 
-SELECT *
-       FROM (SELECT p1.postID,
-                    p1.userID,
-                    p1.content,
-                    p1.dateCreated
-                    FROM posts p1
-                    WHERE p1.userID in (1, 2, 3)
-             UNION ALL
-             SELECT r1.postID,
-                    r1.userID,
-                    p2.content,
-                    r1.dateCreated
-                    FROM reposts r1
-                         INNER JOIN posts p2
-                                    ON p2.postID = r1.postID
-                    WHERE r1.userid in (1, 2, 3)) x
-       ORDER BY x.dateCreated DESC;
+SELECT "repostComment" as type, p.userID, postID as articleID, p.content, r.dateCreated FROM posts p JOIN reposts r ON p.postID=r.repostedPost WHERE r.userID in (1)
+UNION 
+SELECT "repostPost" as type, c.userID, commentID as articleID, c.content, r.dateCreated FROM comments c JOIN reposts r ON c.commentID=r.repostedComment WHERE r.userID in (1)
+UNION
+SELECT "post" as type, p.userID, postID, p.content, p.dateCreated FROM posts p WHERE p.userID IN (1)

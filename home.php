@@ -32,80 +32,21 @@ if(!isset($_SESSION["username"])){
         <div class="space"></div>
         <?php
         $postArray = array();
-        $r = array();
+        $implodeFollowing = array();
         foreach($selfFollowings as $result){
-            array_push($r, $result["followingID"]);
+            array_push($implodeFollowing, $result["followingID"]);
         }
-        $r = implode(",", $r);
-
-        $query = $pdo->prepare("SELECT * FROM posts
-        WHERE userID IN ($r) ORDER BY dateCreated DESC LIMIT 1");
+        $implodeFollowing = implode(",", $implodeFollowing);
+        $query = $pdo->prepare(
+        "SELECT 'repostPost' as type, p.userID, postID as articleID, p.content, r.dateCreated FROM posts p JOIN reposts r ON p.postID=r.repostedPost WHERE r.userID in ($implodeFollowing)
+        UNION 
+        SELECT 'repostComment' as type, c.userID, commentID as articleID, c.content, r.dateCreated FROM comments c JOIN reposts r ON c.commentID=r.repostedComment WHERE r.userID in ($implodeFollowing)
+        UNION
+        SELECT 'post' as type, p.userID, postID, p.content, p.dateCreated FROM posts p WHERE p.userID IN ($implodeFollowing)"
+        );
         $query->execute();
-
-        $result = $query->fetch();
-        array_push($postArray, $result);
-        $postLimit = array($result["postID"]);
-        $postTime = array($result["dateCreated"]);
-        for($i = 0; $i < 10; $i++){
-            $query = $pdo->prepare("SELECT * FROM posts
-            WHERE userID IN ($r) AND postID!=? AND dateCreated<=? ORDER BY dateCreated DESC LIMIT 1");
-            $query->bindValue(1, $postLimit[0]);
-            $query->bindValue(2, $postTime[0]);
-            $query->execute();
-            $result = $query->fetch();
-            if(!empty($result)){
-                $postLimit[0] = $result["postID"];
-                $postTime[0] = $result["dateCreated"];
-                array_push($postArray, $result);
-            }
-        }
-
-        $repostID = array();
-        $recommentID = array();
-        $query = $pdo->prepare("SELECT * FROM reposts WHERE userID IN ($r) AND dateCreated>=?");
-        $query->bindValue(1, $postTime[0]);
-        $query->execute();
-        $results = $query->fetchAll();
-        
-        foreach($results as $result){
-            if(!empty($result["repostedPost"])){
-                array_push($repostID, $result["repostedPost"]);
-            }
-            if(!empty($result["repostedComment"])){
-                array_push($recommentID, $result["repostedComment"]);
-            }
-        }
-        
-        
-        foreach($repostID as $result){
-            $repostID = array_unique($repostID);
-            $query = $pdo->prepare("SELECT * FROM posts WHERE postID=?");
-            $query->bindValue(1, $result);
-            $query->execute();
-            $results = $query->fetch();
-            $query = $pdo->prepare("SELECT * FROM reposts WHERE repostedPost=? AND userID in ($r) ORDER BY dateCreated DESC LIMIT 1");
-            $query->bindValue(1, $result);
-            $query->execute();
-            array_push($results, $query->fetch());
-            
-            array_push($postArray, $results);
-        }
-        if(count($recommentID) > 0){
-            
-            $recommentID = array_unique($recommentID);
-            
-            foreach($recommentID as $result){
-                $query = $pdo->prepare("SELECT * FROM comments WHERE commentID=?");
-                $query->bindValue(1, $result);
-                $query->execute();
-                $results = $query->fetch();
-                $query = $pdo->prepare("SELECT * FROM reposts WHERE repostedComment=? AND userID in ($r) ORDER BY dateCreated DESC LIMIT 1");
-                $query->bindValue(1, $result);
-                $query->execute();
-                $results[4] = $query->fetch();
-  
-                array_push($postArray, $results);
-            }
+        foreach($query->fetchAll() as $result){
+            array_push($postArray, $result);
         }
         ?>
         <main class="posts">

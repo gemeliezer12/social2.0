@@ -77,7 +77,7 @@ class Article{
     public function fetchByCommented($commented, $type){
         global $pdo;
         if($type == "post"){
-            $query = $pdo->prepare("SELECT * FROM comments WHERE commentedPost=? AND commentedComment IS NULL");
+            $query = $pdo->prepare("SELECT 'repostComment' as type, userID, commentID as articleID, content, dateCreated FROM comments WHERE commentedPost=?");
             $query->bindValue(1, $commented);
             $query->execute();
         }

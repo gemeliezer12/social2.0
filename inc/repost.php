@@ -81,9 +81,6 @@ echo $countRepost;
 ?>
 
 // If reposted
-    console.log(<?php
-    echo $countRepost;    
-    ?>);
 if(repost == "submit"){
     $(".repost-count-<?php
     echo $type;

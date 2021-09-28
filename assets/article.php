@@ -1,59 +1,53 @@
 <?php
 $dateCreatedArray= array();
 foreach($postArray as $post){;
-    if(isset($post[4])){
-        array_push($dateCreatedArray, $post["4"]["dateCreated"]);
-    }
-    else{
         array_push($dateCreatedArray, $post["dateCreated"]);
-    }
+
 }
 array_multisort($dateCreatedArray, SORT_DESC, $postArray);
 
 
 foreach($postArray as $post){
+    if($post["type"] == "repostPost"){
+        $articleType = "post";
+        $isRepost = " is-repost";
+    }
+    elseif($post["type"] == "repostComment"){
+        $articleType = "comment";
+        $isRepost = " is-repost";
+    }
+    elseif($post["type"] == "post"){
+        $articleType = "post";
+        $isRepost = "";
+    }
     $postUser = $user->fetchData($post["userID"]);
     $postProfile = $profile->fetchData($post["userID"]);
-    if(isset($post["postID"])){
-        $articleType = "post";
-        $articleID = "postID";
-    }
-    elseif(isset($post["commentID"])){
-        $articleType = "comment";
-        $articleID = "commentID";
-    }
-    if(isset($post["4"])){
-        $repostID = "repost-".$post["4"]["repostID"];
-        $likeID = "like-".$post["4"]["repostID"];
-    }
-    $checkLike = $like->checkLike($_SESSION["userID"], $post[$articleID], $articleType);
-    $fetchLike = $like->fetchLike($post[$articleID], $articleType);
-    $checkRepost = $article->checkReposted($post[$articleID], $_SESSION["userID"], $articleType);
-    $fetchRepost = $article->fetchByReposted($post[$articleID], $articleType);
-    $fetchComment = $article->fetchByCommented($post[$articleID], $articleType);
-    $checkComment = $article->checkCommented($post[$articleID], $_SESSION["userID"], $articleType);
+    $checkLike = $like->checkLike($_SESSION["userID"], $post["articleID"], $articleType);
+    $fetchLike = $like->fetchLike($post["articleID"], $articleType);
+    $checkRepost = $article->checkReposted($post["articleID"], $_SESSION["userID"], $articleType);
+    $fetchRepost = $article->fetchByReposted($post["articleID"], $articleType);
+    $fetchComment = $article->fetchByCommented($post["articleID"], $articleType);
+    $checkComment = $article->checkCommented($post["articleID"], $_SESSION["userID"], $articleType);
     ?>
     <script>
         $(document).ready(function(){
             // Updates the like and repost count every 5 seconds
             setInterval(function(){
                 $(".ajax-loader").load("ajax/fetch-like.php",{
-                    articleID: <?php echo $post[$articleID]?>,
+                    articleID: <?php echo $post["articleID"]?>,
                     type: "<?php echo $articleType?>"
                 });
             }, 5000);
             // Like and repost without reloading using AJAX and JQUERY
             $(".like-input-<?php
             echo $articleType;
-            echo $post[$articleID];
-            if(isset($post["4"])){
-                echo " ";
-                echo $likeID;
-
+            echo $post["articleID"];
+            if($isRepost == " is-repost"){
+                echo "#is-repost";
             }
             ?>").click(function(){    
                 $(".like-loader").load("inc/like.php",{
-                articleID: <?php echo $post[$articleID]?>,
+            "articleID": <?php echo $post["articleID"]?>,
                 posterID: "<?php echo $post["userID"]?>",
                 submit: $(this).attr("name"),
                 type: "<?php
@@ -63,15 +57,14 @@ foreach($postArray as $post){
             })
             $(".repost-input-<?php
             echo $articleType;
-            echo $post[$articleID];
-            if(isset($post["4"])){
-                echo "#";
-                echo $repostID;
-
-            }?> ").click(function(){
+            echo $post["articleID"];
+            if($isRepost == " is-repost"){
+                echo "#is-repost";
+            }
+            ?>").click(function(){
                 
                 $(".repost-loader").load("inc/repost.php",{
-                articleID: <?php echo $post[$articleID]?>,
+                articleID: <?php echo $post["articleID"]?>,
                 posterID: "<?php echo $post["userID"]?>",
                 submit: $(this).attr("name"),
                 type: "<?php
@@ -83,10 +76,10 @@ foreach($postArray as $post){
             $(".<?php
             echo $articleType;
             echo "-link";
-            echo $post[$articleID];
+            echo $post["articleID"];
             ?>").click(function(e){
                 if(!$(e.target).hasClass("dont-link")){
-                    window.location.href = "http://localhost/social2.0/article.php?<?php echo $articleType?>=<?php echo $post[$articleID]?>";
+                    window.location.href = "http://localhost/social2.0/article.php?<?php echo $articleType?>=<?php echo $post["articleID"]?>";
                 }
             })
         })
@@ -94,10 +87,10 @@ foreach($postArray as $post){
         <article class="cursor-pointer padding-15 padding-equal border-bottom hover-base-4 <?php
         echo $articleType;
         echo "-link";
-        echo $post[$articleID];
+        echo $post["articleID"];
         ?>" >
         <?php
-        if(isset($post[4])){
+        if($post["type"] == "repostPost"){
             ?>
             <div class="flex margin-bottom-6">
                 <div class="margin-right-10" style="width: 50px; display: flex; justify-content: flex-end">
@@ -171,12 +164,9 @@ foreach($postArray as $post){
                         
                         <button class="btn-count repost-parent repost-input-<?php
                         echo $articleType;
-                        echo $post[$articleID];
-                        if(isset($post["4"])){
-                            echo " ";
-                            echo $repostID;
-
-                        }?>" name="<?php
+                        echo $post["articleID"];
+                        echo $isRepost;
+                        ?>" name="<?php
                         if($checkRepost > 0){
                             echo "unsubmit";
                         }
@@ -194,7 +184,7 @@ foreach($postArray as $post){
                             ?>"></i>
                             <p class="subtitle-m  dont-link repost-count-<?php
                             echo $articleType;
-                            echo $post[$articleID];
+                            echo $post["articleID"];
                             ?><?php
                             if($checkRepost > 0){
                                 echo " reposted";
@@ -207,12 +197,9 @@ foreach($postArray as $post){
                         </button>
                         <button class="btn-count like-parent like-input-<?php
                         echo $articleType;
-                        echo $post[$articleID];
-                        if(isset($post["4"])){
-                            echo " ";
-                            echo $likeID;
-
-                        }?>" name="<?php
+                        echo $post["articleID"];
+                        echo $isRepost;
+                        ?>" name="<?php
                         if($checkLike > 0){
                             echo "unsubmit";
                         }
@@ -230,7 +217,7 @@ foreach($postArray as $post){
                             ?>"></i>
                             <p class="subtitle-m  dont-link like-count-<?php
                             echo $articleType;
-                            echo $post[$articleID];
+                            echo $post["articleID"];
                             ?><?php
                             if($checkLike > 0){
                                 echo " liked";
