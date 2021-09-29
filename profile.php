@@ -1,9 +1,7 @@
 <?php
 include "assets/header.php";
-if(!isset($_SESSION["username"])){
-    header("Location: index.php");
-}
-$username = $_SESSION["username"];
+if(isset($_SESSION["username"])){
+    $username = $_SESSION["username"];
 if(empty($_GET["username"])){
     header("Location: profile.php?username=$username");
 }
@@ -153,3 +151,106 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
 </html>
 
 <div class="follow-loader"></div>
+    <?php
+}
+else{
+    if(empty($_GET["username"])){
+        header("Location: index.php");
+    }
+    $userData = $user->fetchData($_GET["username"]);
+    $profileData = $profile->fetchData($userData["userID"]);
+    $userPost = $article->fetchByUser($userData["userID"], "post");
+    $following = $relationship->fetchFollowing($userData["userID"]);
+    $follower = $relationship->fetchFollower($userData["userID"]);
+    ?>
+    <body>
+        <?php
+            include "assets/sidebar.php";
+        ?>
+
+        <main class="sidebar-margin-left main-body">
+            <header class="main-header padding-15">
+                <i class="fas fa-arrow-left icon-hover-s current margin-right-15" onclick="window.history.go(-1); return false;"></i>
+                <div>
+                    <p class="title-m"><?php
+                    echo $userData["username"];
+                    ?></p>
+                    <p class="subtitle-xs"><?php
+                    echo count($userPost);
+                    ?> Tweets</p>
+                </div>
+            </header>
+            <div class="header-margin-top"></div>
+            <a class="aspect-3x1">
+                <img src="profiles/cover/default.png" alt="">
+            </a>
+            <header class="main-profile-header padding-15 padding-bottom-10 border-bottom">
+                <div class="profile-picture-header">
+                    <a class="aspect-1x1" href="">
+                        <img src="profiles/profile-picture/default.png" alt="">
+                    </a>
+                    <a class="btn-m btn-t following" href="index.php">Follow</a>
+                </div>
+                <p class="title-l margin-top-6"><?php
+                echo $profileData["name"];
+                ?></p>
+                <p class="subtitle-s">@<?php
+                echo $userData["username"];
+                ?></p>
+                <p class="title-m margin-top-10">
+                    <?php
+                    echo $profileData["bio"];
+                    ?>
+                </p>
+                <?php
+                if(!empty($profileData["website"])){
+                    ?>
+                    <span class="padding-top-10 inline-block">
+                        <i class="fas fa-link fs-18"></i>
+                        <a  class="title-primary-s hover-underline" href="<?php
+                        echo $profileData["website"];
+                        ?>"><?php
+                        echo $profileData["website"];
+                        ?></a>
+                    </span>
+                    <?php
+                }
+                ?>
+                <div class="margin-top-10">
+                    <a class="subtitle-s hover-underline" href="relationship.php?following=<?php
+                    echo $userData["username"];
+                    ?>">
+                        <span><?php
+                        echo count($following);
+                        ?></span>
+                        Following
+                    </a>
+                    <a class="subtitle-s hover-underline" href="relationship.php?follower=<?php
+                    echo $userData["username"];
+                    ?>">
+                        <span class="follower-count"><?php
+                        echo count($follower);
+                        ?></span>
+                        Followers
+                    </a>
+                </div>
+            </header>
+            <div class="space"></div>
+            <?php
+            $postArray = array();
+            foreach($userPost as $result){
+                array_push($postArray, $result);
+            }
+            ?>
+            <main class="posts">
+                <?php
+                include "assets/article.php";
+                ?>
+            </main>
+        </main>
+    </body>
+    </html>
+
+    <div class="follow-loader"></div>
+<?php
+}

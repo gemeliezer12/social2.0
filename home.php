@@ -31,22 +31,21 @@ if(!isset($_SESSION["username"])){
         </form>
         <div class="space"></div>
         <?php
-        $postArray = array();
-        $implodeFollowing = array();
-        foreach($selfFollowings as $result){
-            array_push($implodeFollowing, $result["followingID"]);
-        }
-        $implodeFollowing = implode(",", $implodeFollowing);
-        $query = $pdo->prepare(
-        "SELECT 'repostPost' as type, p.userID, postID as articleID, p.content, r.dateCreated FROM posts p JOIN reposts r ON p.postID=r.repostedPost WHERE r.userID in ($implodeFollowing)
-        UNION 
-        SELECT 'repostComment' as type, c.userID, commentID as articleID, c.content, r.dateCreated FROM comments c JOIN reposts r ON c.commentID=r.repostedComment WHERE r.userID in ($implodeFollowing)
-        UNION
-        SELECT 'post' as type, p.userID, postID, p.content, p.dateCreated FROM posts p WHERE p.userID IN ($implodeFollowing)"
-        );
-        $query->execute();
-        foreach($query->fetchAll() as $result){
-            array_push($postArray, $result);
+        if(!empty($implodeFollowing)){
+            $query = $pdo->prepare(
+            "SELECT 'repostPost' as type, p.userID, postID as articleID, p.content, r.dateCreated FROM posts p JOIN reposts r ON p.postID=r.repostedPost WHERE r.userID in ($implodeFollowing) AND p.userID NOT IN ($implodeFollowing) AND p.userID!=?
+            UNION 
+            SELECT 'repostComment' as type, c.userID, commentID as articleID, c.content, r.dateCreated FROM comments c JOIN reposts r ON c.commentID=r.repostedComment WHERE r.userID in ($implodeFollowing) AND c.userID NOT IN ($implodeFollowing) AND c.userID!=?
+            UNION
+            SELECT 'post' as type, p.userID, postID, p.content, p.dateCreated FROM posts p WHERE p.userID IN ($implodeFollowing) AND p.userID!=?"
+            );
+            $query->bindValue(1, $_SESSION["userID"]);
+            $query->bindValue(2, $_SESSION["userID"]);
+            $query->bindValue(3, $_SESSION["userID"]);
+            $query->execute();
+            foreach($query->fetchAll() as $result){
+                array_push($postArray, $result);
+            }
         }
         ?>
         <main class="posts">

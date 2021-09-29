@@ -22,6 +22,12 @@ if(isset($_SESSION["userID"])){
     $selfUserData = $user->fetchData($_SESSION["userID"]);
     $selfProfileData = $profile->fetchData($_SESSION["userID"]);
     $selfFollowings = $relationship->fetchFollowing($_SESSION["userID"]);
+    $postArray = array();
+    $implodeFollowing = array();
+    foreach($selfFollowings as $result){
+        array_push($implodeFollowing, $result["followingID"]);
+    }
+    $implodeFollowing = implode(",", $implodeFollowing);
 }
 ?>
 

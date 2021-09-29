@@ -1,8 +1,5 @@
 <?php
 include "assets/header.php";
-if(!isset($_SESSION["username"])){
-    header("Location: index.php");
-}
 $userIDs = array();
 $postArray = array();
 if(isset($_GET["search"])){

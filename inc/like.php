@@ -10,12 +10,13 @@ $articleID = $_POST["articleID"];
 $type = $_POST["type"];
 $submit = $_POST["submit"];
 
+
 if($submit == "submit"){
     ?>
     <script>
         $(".like-input-<?php
         echo $type;
-        echo $articleID
+        echo $articleID;
         ?>").attr("name", "unsubmit")
     </script>
     <?php
@@ -52,10 +53,9 @@ elseif($submit == "unsubmit"){
         $query->execute();
     }
     elseif($type == "comment"){
-        $query = $pdo->prepare("DELETE FROM likes WHERE AND userID=? AND likedComment=?");
-        $query->bindValue(1, false);
-        $query->bindValue(2, $userID);
-        $query->bindValue(3, $articleID);
+        $query = $pdo->prepare("DELETE FROM likes WHERE userID=? AND likedComment=?");
+        $query->bindValue(1, $userID);
+        $query->bindValue(2, $articleID);
         $query->execute();
     }
 }
@@ -145,5 +145,6 @@ if($countRepost <= 0 && $countLike <= 0){
     ?>").parent("a").parent("div").addClass("hidden")
     <?php
 }
+
 ?>
 </script>
