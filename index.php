@@ -5,11 +5,13 @@ if(isset($_SESSION["username"])){
 }
 ?>
 <body class="index-page">
-    <main>
-        <p class="index-title">Happening now</p>
-        <p class="title-s">Join us today!</p>
-        <a class="btn-m btn-t" href="signup.php">Sign up</a>
-        <a class="btn-m btn-c" href="login.php">Log in</a>
-    </main>
+    <div class="body-300">
+        <main class="margin-top-80">
+            <p class="title-40">Happening now</p>
+            <p class="title-20 margin-top-40">Join us today!</p>
+            <a class="btn-m btn-t margin-top-26" href="signup.php">Sign up</a>
+            <a class="btn-m btn-c margin-top-26" href="login.php">Log in</a>
+        </main>
+    </div>
 </body>
 </html>

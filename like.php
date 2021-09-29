@@ -16,7 +16,7 @@ elseif(isset($_GET["comment"])){
         <header class="main-header padding-15 border-bottom">
             <i class="fas fa-arrow-left icon-hover-s current margin-right-15" onclick="window.history.go(-1); return false;"></i>
             <div>
-                <p class="title-m">Liked by</p>
+                <p class="title-18">Liked by</p>
             </div>
         </header>
         <div class="header-margin-top"></div>

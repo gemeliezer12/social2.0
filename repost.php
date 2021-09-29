@@ -17,7 +17,7 @@ $reposters = $article->fetchByReposted($_GET[$articleType], $articleType);
         <header class="main-header padding-15 border-bottom">
             <i class="fas fa-arrow-left icon-hover-s current margin-right-15" onclick="window.history.go(-1); return false;"></i>
             <div>
-                <p class="title-m">Reposted by</p>
+                <p class="title-18">Reposted by</p>
             </div>
         </header>
         <div class="header-margin-top"></div>

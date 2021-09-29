@@ -32,6 +32,7 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
     })
 </script>
 <body>
+    <div class="body-400  relative border-if">
     <?php
         include "assets/sidebar.php";
     ?>
@@ -40,10 +41,10 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
         <header class="main-header padding-15">
             <i class="fas fa-arrow-left icon-hover-s current margin-right-15" onclick="window.history.go(-1); return false;"></i>
             <div>
-                <p class="title-m"><?php
+                <p class="title-18"><?php
                 echo $userData["username"];
                 ?></p>
-                <p class="subtitle-xs"><?php
+                <p class="subtitle-14"><?php
                 echo count($userPost);
                 ?> Tweets</p>
             </div>
@@ -90,13 +91,13 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
                 
                 ?>
             </div>
-            <p class="title-l margin-top-6"><?php
+            <p class="title-20 margin-top-6"><?php
             echo $profileData["name"];
             ?></p>
-            <p class="subtitle-s">@<?php
+            <p class="subtitle-16">@<?php
             echo $userData["username"];
             ?></p>
-            <p class="title-m margin-top-10">
+            <p class="title-18 margin-top-10">
                 <?php
                 echo $profileData["bio"];
                 ?>
@@ -116,7 +117,7 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
             }
             ?>
             <div class="margin-top-10">
-                <a class="subtitle-s hover-underline" href="relationship.php?following=<?php
+                <a class="subtitle-16 hover-underline" href="relationship.php?following=<?php
                 echo $userData["username"];
                 ?>">
                     <span><?php
@@ -124,7 +125,7 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
                     ?></span>
                     Following
                 </a>
-                <a class="subtitle-s hover-underline" href="relationship.php?follower=<?php
+                <a class="subtitle-16 hover-underline" href="relationship.php?follower=<?php
                 echo $userData["username"];
                 ?>">
                     <span class="follower-count"><?php
@@ -172,10 +173,10 @@ else{
             <header class="main-header padding-15">
                 <i class="fas fa-arrow-left icon-hover-s current margin-right-15" onclick="window.history.go(-1); return false;"></i>
                 <div>
-                    <p class="title-m"><?php
+                    <p class="title-18"><?php
                     echo $userData["username"];
                     ?></p>
-                    <p class="subtitle-xs"><?php
+                    <p class="subtitle-14"><?php
                     echo count($userPost);
                     ?> Tweets</p>
                 </div>
@@ -191,13 +192,13 @@ else{
                     </a>
                     <a class="btn-m btn-t following" href="index.php">Follow</a>
                 </div>
-                <p class="title-l margin-top-6"><?php
+                <p class="title-20 margin-top-6"><?php
                 echo $profileData["name"];
                 ?></p>
-                <p class="subtitle-s">@<?php
+                <p class="subtitle-16">@<?php
                 echo $userData["username"];
                 ?></p>
-                <p class="title-m margin-top-10">
+                <p class="title-18 margin-top-10">
                     <?php
                     echo $profileData["bio"];
                     ?>
@@ -217,7 +218,7 @@ else{
                 }
                 ?>
                 <div class="margin-top-10">
-                    <a class="subtitle-s hover-underline" href="relationship.php?following=<?php
+                    <a class="subtitle-16 hover-underline" href="relationship.php?following=<?php
                     echo $userData["username"];
                     ?>">
                         <span><?php
@@ -225,7 +226,7 @@ else{
                         ?></span>
                         Following
                     </a>
-                    <a class="subtitle-s hover-underline" href="relationship.php?follower=<?php
+                    <a class="subtitle-16 hover-underline" href="relationship.php?follower=<?php
                     echo $userData["username"];
                     ?>">
                         <span class="follower-count"><?php
@@ -248,7 +249,8 @@ else{
                 ?>
             </main>
         </main>
-    </body>
+    <div class="body-400  relative">
+</body>
     </html>
 
     <div class="follow-loader"></div>

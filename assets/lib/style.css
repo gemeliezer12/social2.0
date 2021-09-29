@@ -67,7 +67,6 @@ body{
     background-color: var(--bg-color);
 }
 
-
 .btn-m{
     padding: 8px;
     padding-left: 12px;
@@ -160,48 +159,67 @@ body{
     color: var(--primary-color1);
 }
 
-.title-xs{
+.title-14{
     font-size: 14px;
     font-weight: 500;
 }
 
-.subtitle-xs{
+.subtitle-14{
     font-size: 14px;
     font-weight: 500;
     color: var(--base-color-trans3);
 }
 
-.title-s{
+.title-16{
     font-size: 16px;
     font-weight: 700;
 }
 
-.subtitle-s{
+.subtitle-16{
     font-size: 16px;
     font-weight: 500;
     color: var(--base-color-trans3);
 }
 
-.title-m{
+.title-18{
     font-size: 18px;
     font-weight: 900;
 }
 
-.subtitle-m{
+.subtitle-18{
     font-size: 18px;
     font-weight: 500;
     color: var(--base-color-trans3);
 }
 
-.title-l{
+.title-20{
     font-size: 20px;
     font-weight: 900;
 }
 
-.subtitle-l{
+.title-40{
+    font-size: 40px;
+    font-weight: 900;
+}
+
+.subtitle-20{
     font-size: 20px;
     font-weight: 500;
     color: var(--base-color-trans3);
+}
+
+.subtitle-40{
+    font-size: 40px;
+    font-weight: 500;
+    color: var(--base-color-trans3);
+}
+
+.input-lbl textarea{
+    border: 1px solid transparent;
+    font-size: 18px;
+    height: 23px;
+    min-height: 23px;
+    max-height: 83px;
 }
 
 .hidden{
@@ -213,18 +231,10 @@ textarea{
     border: 1px solid transparent;
 }
 
-.input-lbl textarea{
-    border: 1px solid transparent;
-    font-size: 18px;
-    height: 23px;
-    min-height: 23px;
-    max-height: 83px;
-}
 
 i.current{
     color: var(--primary-color1); 
 }
-
 
 
 .width-100{
@@ -252,12 +262,20 @@ i.current{
     margin-right: 10px;
 }
 
+.margin-left-15{
+    margin-left: 15px;
+}
+
+.margin-left-10{
+    margin-left: 10px;
+}
 
 
-button{
+
+/* button{
     border: none;
     border-radius: 200px;
-}
+} */
 
 .margin-10{
     margin-right: 10px;
@@ -318,12 +336,36 @@ button{
     height: 60px;
 }
 
+.margin-bottom-80{
+    margin-bottom: 80px;
+}
+
+.margin-top-80{
+    margin-top: 80px;
+}
+
+.margin-bottom-40{
+    margin-bottom: 40px;
+}
+
+.margin-top-40{
+    margin-top: 40px;
+}
+
 .margin-top-10{
     margin-top: 10px;
 }
 
 .margin-bottom-10{
-    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.margin-top-26{
+    margin-top: 26px;
+}
+
+.margin-bottom-26{
+    margin-bottom: 26px;
 }
 
 .font-500{
@@ -405,9 +447,12 @@ button{
     border-radius: 200px;
 }
 
-.border-all-base.radius-20{
-    border: 1px solid var(--base-color-trans1);
+.radius-20{
     border-radius: 20px;
+}
+
+.border-all-base{
+    border: 1px solid var(--base-color-trans1);
 }
 
 .hover-underline{
@@ -452,6 +497,10 @@ img{
     align-items: center;
 }
 
+.fs-40{
+    font-size: 40px;
+}
+
 .fs-20{
     font-size: 20px;
 }
@@ -461,6 +510,10 @@ img{
 }
 
 .fs-16{
+    font-size: 16px;
+}
+
+.fs-14{
     font-size: 16px;
 }
 
@@ -484,4 +537,50 @@ img{
 
 script{
     display: none;
+}
+
+.middle{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.relative{
+    position: relative;
+}
+
+.height-54{
+    height: 54px;
+}
+
+.opacity-lower{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    background: var(--base-color-trans1);
+}
+
+.z-0{
+    z-index: -10;
+}
+
+.z-10{
+    z-index: 10;
+}
+
+.z-20{
+    z-index: 20;
+}
+
+.z-30{
+    z-index: 30;
+}
+
+.text-center{
+    text-align: center;
 }

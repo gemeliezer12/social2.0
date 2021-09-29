@@ -4,7 +4,9 @@ if(isset($_POST["submit"])){
     $name = $_POST["name"];
     $bio = $_POST["bio"];
     $website = $_POST["website"];
-    echo $website;
+    if(isset($_FILES)){
+        print_r($_FILES);
+    }
     
     $query = $pdo->prepare("UPDATE profiles SET name=?, bio=?, website=? WHERE userID=?");
     $query->bindValue(1, $name);

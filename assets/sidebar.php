@@ -52,10 +52,10 @@
                     <img class="profile-picture-50 margin-right-10" src="profiles/profile-picture/default.png" alt="">
                     <div  class="space-between align-center width-100">
                         <div> 
-                            <p class="title-m"><?php
+                            <p class="title-18"><?php
                             echo $selfProfileData["name"];
                             ?></p>
-                            <p class="subtitle-xs">@<?php
+                            <p class="subtitle-14">@<?php
                             echo $_SESSION["username"]
                             ?></p>
                         </div>
@@ -63,10 +63,10 @@
                     </div>
                 </div>
                 <form class="padding-15 padding-y-15 cursor-pointer hover-base-02 border-bottom">
-                    <p class="title-s">Manage your account</p>
+                    <p class="title-16">Manage your account</p>
                 </form>
                 <form class="padding-15 padding-y-15 cursor-pointer hover-base-02" action="inc/logout.php" method="POST">
-                    <input class="title-s" type="submit" value="Log out @<?php
+                    <input class="title-16" type="submit" value="Log out @<?php
                     echo $_SESSION["username"];
                     ?>">
                 </form>

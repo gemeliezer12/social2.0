@@ -46,10 +46,10 @@ if(isset($_SESSION["username"])){
                         <div>
                             <a href="profile.php?username=<?php
                             echo $userData["username"];
-                            ?>" class="title-m hover-underline"><?php
+                            ?>" class="title-18 hover-underline"><?php
                             echo $profileData["name"];
                             ?></a>
-                            <p class="subtitle-xs" id="link">@<?php
+                            <p class="subtitle-14" id="link">@<?php
                             echo $userData["username"];
                             ?></p>
                         </div>
@@ -121,10 +121,10 @@ else{
                         <div>
                             <a href="profile.php?username=<?php
                             echo $userData["username"];
-                            ?>" class="title-m hover-underline"><?php
+                            ?>" class="title-18 hover-underline"><?php
                             echo $profileData["name"];
                             ?></a>
-                            <p class="subtitle-xs" id="link">@<?php
+                            <p class="subtitle-14" id="link">@<?php
                             echo $userData["username"];
                             ?></p>
                         </div>

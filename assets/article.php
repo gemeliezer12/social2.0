@@ -108,15 +108,15 @@ for($i = 0; $i < count($postArray); $i++){
             ?>
             <div class="flex margin-bottom-6">
                 <div class="margin-right-10" style="width: 50px; display: flex; justify-content: flex-end">
-                    <i class="fa fa-retweet subtitle-m"></i>
+                    <i class="fa fa-retweet subtitle-18"></i>
                 </div>
                 <a href="profile.php?username=<?php
                 echo $repostUser["username"];
-                ?>" class="hover-underline subtitle-xs">
-                    <span class="subtitle-xs"><?php
+                ?>" class="hover-underline subtitle-14">
+                    <span class="subtitle-14"><?php
                     echo $repostProfile["name"];
                     ?></span>
-                    <span class="subtitle-xs">retweeted</span>
+                    <span class="subtitle-14">retweeted</span>
                 </a>
             </div>
             <?php
@@ -130,14 +130,14 @@ for($i = 0; $i < count($postArray); $i++){
                     <a href="profile.php?username=<?php
                         echo $postUser["username"];
                     ?>">
-                        <span class="title-s hover-underline"><?php
+                        <span class="title-16 hover-underline"><?php
                         echo $postProfile["name"];
                         ?></span>
-                        <span class="subtitle-xs">@<?php
+                        <span class="subtitle-14">@<?php
                         echo $postUser["username"];
                         ?></span>
-                        <span class="subtitle-xs">·</span>
-                        <span class="subtitle-xs"><?php
+                        <span class="subtitle-14">·</span>
+                        <span class="subtitle-14"><?php
                         if($post["type"] == "repostPost" || $post["type"] == "repostComment"){
                             echo $time->timeAgo($actualPost["dateCreated"]);
                         }
@@ -168,7 +168,7 @@ for($i = 0; $i < count($postArray); $i++){
                                 }
                                 if(count($fetchComment) > 0){
                                 ?>
-                                    <p class="subtitle-m <?php
+                                    <p class="subtitle-18 <?php
                                     if($checkComment > 0){
                                         echo "commented";
                                     }
@@ -183,7 +183,7 @@ for($i = 0; $i < count($postArray); $i++){
                             else{
                                 ?>
                                 <i class="far fa-comment icon-hover-s"></i>
-                                <p class="subtitle-m <?php
+                                <p class="subtitle-18 <?php
                                 if(count($fetchComment) <= 0){
                                     echo "hidden";
                                 }
@@ -218,7 +218,7 @@ for($i = 0; $i < count($postArray); $i++){
                                 echo "fa";
                             }
                             ?>"></i>
-                            <p class="subtitle-m  dont-link repost-count-<?php
+                            <p class="subtitle-18  dont-link repost-count-<?php
                             echo $articleType;
                             echo $post["articleID"];
                             ?><?php
@@ -252,7 +252,7 @@ for($i = 0; $i < count($postArray); $i++){
                                 echo "far";
                             }
                             ?>"></i>
-                            <p class="subtitle-m  dont-link like-count-<?php
+                            <p class="subtitle-18  dont-link like-count-<?php
                             echo $articleType;
                             echo $post["articleID"];
                             ?><?php
