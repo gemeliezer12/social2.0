@@ -1,9 +1,6 @@
 <?php
 
 include "assets/header.php";
-if(!isset($_SESSION["username"])){
-    header("Location: index.php");
-}
 if(isset($_GET["post"])){
     $mainArticleType = "post";
     $mainArticleID = "postID";
@@ -15,12 +12,14 @@ elseif(isset($_GET["comment"])){
 $mainArticle = $article->fetchByArticle($_GET[$mainArticleType], $mainArticleType);
 $mainUser = $user->fetchData($mainArticle["userID"]);
 $mainProfile = $profile->fetchData($mainArticle["userID"]);
-$mainCheckLike = $like->checkLike($_SESSION["userID"], $mainArticle[$mainArticleType."ID"], $mainArticleType);
 $mainFetchLike = $like->fetchLike($mainArticle[$mainArticleType."ID"], $mainArticleType);
-$mainCheckRepost = $article->checkReposted($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
 $mainFetchRepost = $article->fetchByReposted($mainArticle[$mainArticleType."ID"], $mainArticleType);
-$mainCheckComment = $article->checkCommented($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
 $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID"], $mainArticleType);
+if(isset($_SESSION["username"])){
+    $mainCheckLike = $like->checkLike($_SESSION["userID"], $mainArticle[$mainArticleType."ID"], $mainArticleType);
+    $mainCheckRepost = $article->checkReposted($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
+    $mainCheckComment = $article->checkCommented($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
+}
 ?>
 <body>
     <?php
@@ -35,35 +34,37 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     main: "true"
                 });
             }, 5000);
-            $(".like-input-<?php
-            echo $mainArticleType;
-            echo $mainArticle[$mainArticleID]
-                ?>").click(function(){
-                    $(".like-loader").load("inc/like.php",{
-                    articleID: <?php echo $mainArticle[$mainArticleID]?>,
-                    posterID: "<?php echo $mainArticle["userID"]?>",
-                    submit: $(this).attr("name"),
-                    type: "<?php
-                    echo $mainArticleType;
-                    ?>",
-                    main: "true"
-                });
-            })
-            $(".repost-input-<?php
-            echo $mainArticleType;
-            echo $mainArticle[$mainArticleID]
-                ?>").click(function(){
-                    
-                    $(".repost-loader").load("inc/repost.php",{
-                    articleID: <?php echo $mainArticle[$mainArticleID]?>,
-                    posterID: "<?php echo $mainArticle["userID"]?>",
-                    submit: $(this).attr("name"),
-                    type: "<?php
-                    echo $mainArticleType;
-                    ?>",
-                    main: "true"
-                });
-            })
+            if(isset($_SESSION["username"])){
+                $(".like-input-<?php
+                echo $mainArticleType;
+                echo $mainArticle[$mainArticleID]
+                    ?>").click(function(){
+                        $(".like-loader").load("inc/like.php",{
+                        articleID: <?php echo $mainArticle[$mainArticleID]?>,
+                        posterID: "<?php echo $mainArticle["userID"]?>",
+                        submit: $(this).attr("name"),
+                        type: "<?php
+                        echo $mainArticleType;
+                        ?>",
+                        main: "true"
+                    });
+                })
+                $(".repost-input-<?php
+                echo $mainArticleType;
+                echo $mainArticle[$mainArticleID]
+                    ?>").click(function(){
+                        
+                        $(".repost-loader").load("inc/repost.php",{
+                        articleID: <?php echo $mainArticle[$mainArticleID]?>,
+                        posterID: "<?php echo $mainArticle["userID"]?>",
+                        submit: $(this).attr("name"),
+                        type: "<?php
+                        echo $mainArticleType;
+                        ?>",
+                        main: "true"
+                    });
+                })
+            }
         })
     </script>
     <main class="sidebar-margin-left main-body">
@@ -153,15 +154,22 @@ $mainFetchComment = $article->fetchByCommented($mainArticle[$mainArticleType."ID
                     <footer class="width-100 post-btns">
                     <a class="btn-count comment-parent">
                         <?php
-                        if($mainCheckComment > 0){
-                            ?>
-                            <i class="fas fa-comment icon-hover-s commented"></i>
-                            <?php
+                        if(isset($_SESSION["username"])){
+                            if($mainCheckComment > 0){
+                                ?>
+                                <i class="fas fa-comment icon-hover-s commented"></i>
+                                <?php
+                            }
+                            else{
+                                ?>
+                                <i class="far fa-comment icon-hover-s"></i>
+                                <?php
+                            }
                         }
                         else{
-                            ?>
+                        ?>
                             <i class="far fa-comment icon-hover-s"></i>
-                            <?php
+                        <?php
                         }
                         ?>
                     </a>

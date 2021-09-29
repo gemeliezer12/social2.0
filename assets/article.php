@@ -37,12 +37,14 @@ for($i = 0; $i < count($postArray); $i++){
     }
     $postUser = $user->fetchData($post["userID"]);
     $postProfile = $profile->fetchData($post["userID"]);
-    $checkLike = $like->checkLike($_SESSION["userID"], $post["articleID"], $articleType);
     $fetchLike = $like->fetchLike($post["articleID"], $articleType);
-    $checkRepost = $article->checkReposted($post["articleID"], $_SESSION["userID"], $articleType);
     $fetchRepost = $article->fetchByReposted($post["articleID"], $articleType);
     $fetchComment = $article->fetchByCommented($post["articleID"], $articleType);
-    $checkComment = $article->checkCommented($post["articleID"], $_SESSION["userID"], $articleType);
+    if(isset($_SESSION["username"])){
+        $checkLike = $like->checkLike($_SESSION["userID"], $post["articleID"], $articleType);
+        $checkRepost = $article->checkReposted($post["articleID"], $_SESSION["userID"], $articleType);
+        $checkComment = $article->checkCommented($post["articleID"], $_SESSION["userID"], $articleType);
+    }
     ?>
     <script>
         $(document).ready(function(){
@@ -54,30 +56,36 @@ for($i = 0; $i < count($postArray); $i++){
                 });
             }, 5000);
             // Like and repost without reloading using AJAX and JQUERY
-            $("#main-like<?php
-            echo $i;
-            ?>").click(function(){
-            $(".like-loader").load("inc/like.php",{
-                articleID: <?php echo $post["articleID"]?>,
-                posterID: "<?php echo $post["userID"]?>",
-                submit: $(this).attr("name"),
-                type: "<?php
-                echo $articleType;
-                ?>"
-                });
-            })
-            $("#main-repost<?php
-            echo $i;
-            ?>").click(function(){
-                $(".repost-loader").load("inc/repost.php",{
-                articleID: <?php echo $post["articleID"]?>,
-                posterID: "<?php echo $post["userID"]?>",
-                submit: $(this).attr("name"),
-                type: "<?php
-                echo $articleType;
-                ?>"
-                });
-            })
+            <?php
+            if(isset($_SESSION["username"])){
+                ?>
+                $("#main-like<?php
+                echo $i;
+                ?>").click(function(){
+                $(".like-loader").load("inc/like.php",{
+                    articleID: <?php echo $post["articleID"]?>,
+                    posterID: "<?php echo $post["userID"]?>",
+                    submit: $(this).attr("name"),
+                    type: "<?php
+                    echo $articleType;
+                    ?>"
+                    });
+                })
+                $("#main-repost<?php
+                echo $i;
+                ?>").click(function(){
+                    $(".repost-loader").load("inc/repost.php",{
+                    articleID: <?php echo $post["articleID"]?>,
+                    posterID: "<?php echo $post["userID"]?>",
+                    submit: $(this).attr("name"),
+                    type: "<?php
+                    echo $articleType;
+                    ?>"
+                    });
+                })
+                <?php
+            }
+            ?>
             // Links to the main post page except when Like or Repost is click
             $(".<?php
             echo $articleType;
@@ -147,30 +155,44 @@ for($i = 0; $i < count($postArray); $i++){
                     <footer class="width-100 post-btns margin-top-6">
                         <a class="btn-count comment-parent">
                             <?php
-                            if($checkComment > 0){
+                            if(isset($_SESSION["username"])){
+                                if($checkComment > 0){
                                 ?>
-                                <i class="fas fa-comment icon-hover-s commented"></i>
+                                    <i class="fas fa-comment icon-hover-s commented"></i>
+                                    <?php
+                                }
+                                else{
+                                ?>
+                                    <i class="far fa-comment icon-hover-s"></i>
                                 <?php
+                                }
+                                if(count($fetchComment) > 0){
+                                ?>
+                                    <p class="subtitle-m <?php
+                                    if($checkComment > 0){
+                                        echo "commented";
+                                    }
+                                ?>">
+                                <?php
+                                    echo count($fetchComment);
+                                ?>
+                                    </p>
+                                <?php
+                                }
                             }
                             else{
                                 ?>
                                 <i class="far fa-comment icon-hover-s"></i>
+                                <p class="subtitle-m <?php
+                                if(count($fetchComment) <= 0){
+                                    echo "hidden";
+                                }
+                                ?>">
+                                    <?php
+                                    echo count($fetchComment);
+                                    ?>
+                                </p>
                                 <?php
-                            }
-                            ?>
-                            <?php
-                            if(count($fetchComment) > 0){
-                            ?>
-                            <p class="subtitle-m <?php
-                            if($checkComment > 0){
-                                echo "commented";
-                            }
-                            ?>">
-                            <?php
-                            echo count($fetchComment);
-                            ?>
-                            </p>
-                            <?php
                             }
                             ?>
                         </a>
