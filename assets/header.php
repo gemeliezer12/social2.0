@@ -18,6 +18,8 @@ $search = new Search;
 
 date_default_timezone_set('Asia/Manila');
 
+$profilePictureDestination = "profiles/profile-picture/";
+
 if(isset($_SESSION["userID"])){
     $selfUserData = $user->fetchData($_SESSION["userID"]);
     $selfProfileData = $profile->fetchData($_SESSION["userID"]);

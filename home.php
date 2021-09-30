@@ -21,7 +21,10 @@ if(!isset($_SESSION["username"])){
             <div class="header-margin-top"></div>
             <form class="padding-15 post padding-equal border-bottom" action="inc/post.php" method="POST">
                 <aside class="side-profile margin-right-10">
-                    <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
+                    <img onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+                    echo $profilePictureDestination;
+                    echo $selfProfileData["profilePicture"];
+                    ?>" alt="">
                 </aside>
                 <main class="form width-100">
                     <textarea name="content" placeholder="What's happening?"></textarea>

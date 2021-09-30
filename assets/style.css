@@ -159,37 +159,6 @@ body.edit-profile{
 
 }
 
-/* Index(Log Sign) */
-
-/* .index-page{
-    width: 400px;
-    border-right: none;
-    padding-top: 80px;
-}
-
-.index-page form > *{
-    width: 100%;
-}
-
-.index-page .index-title{
-    font-size: 40px;
-    font-weight: 900;
-}
-
-.index-page .title-s{
-    margin-top: 40px;
-}
-
-.index-page main .btn-m{
-    margin-top: 20px;
-}
-
-.index-page .links{
-    text-align: center;
-    display: block;
-    margin-top: 26px;
-} */
-
 .title-primary-xs{
     color: var(--primary-color1);
     font-size: 14px;

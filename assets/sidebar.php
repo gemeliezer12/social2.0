@@ -49,7 +49,10 @@
                 <div class="padding-15 padding-y-10 border-bottom cursor-pointer flex hover-base-02" href="profile.php?username=<?php
                 echo $_SESSION["username"];
                 ?>">
-                    <img class="profile-picture-50 margin-right-10" src="profiles/profile-picture/default.png" alt="">
+                    <img class="profile-picture-50 margin-right-10" onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+                    echo $profilePictureDestination;
+                    echo $selfProfileData["profilePicture"];
+                    ?>" alt="">
                     <div  class="space-between align-center width-100">
                         <div> 
                             <p class="title-18"><?php
@@ -71,7 +74,10 @@
                     ?>">
                 </form>
             </div>
-            <img class="profile-picture-50" id="profile-btn" src="profiles/profile-picture/default.png" alt="">
+            <img class="profile-picture-50" id="profile-btn" onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+            echo $profilePictureDestination;
+            echo $selfProfileData["profilePicture"];
+            ?>" alt="">
         </div>
         <?php
     }

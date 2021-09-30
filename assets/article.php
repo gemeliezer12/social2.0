@@ -124,7 +124,10 @@ for($i = 0; $i < count($postArray); $i++){
         ?>
         <div class="flex">
             <aside class="margin-right-10">
-                <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
+                <img class="profile-picture-50" onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+                    echo $profilePictureDestination;
+                    echo $postProfile["profilePicture"];
+                    ?>" alt="">
                 </aside>
                 <main class="width-100">
                     <a href="profile.php?username=<?php

@@ -28,7 +28,7 @@ include "assets/header.php";
                     <div class="aspect-1x1">
                         <img id="preview" src="profiles/profile-picture/default.png" alt="">
                         <i class="fas fa-camera icon-hover-s-neutral">
-                            <input class="middle" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"  id="imgInp" type="file">
+                            <input class="middle" name="profile-picture" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"  id="imgInp" type="file">
                         </i>
                     </div>
                 </div>

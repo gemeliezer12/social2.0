@@ -87,7 +87,10 @@ if(isset($_SESSION["username"])){
                         <div class="margin-10" href="profile.php?username=<?php
                         echo $mainUser["username"];
                         ?>">
-                            <img src="profiles/profile-picture/default.png" alt="" class="profile-picture-60">    
+                            <img onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+                            echo $profilePictureDestination;
+                            echo $mainProfile["profilePicture"];
+                            ?>" alt="" class="profile-picture-60">    
                         </div>
                         <div>
                             <a href="profile.php?username=<?php
@@ -248,7 +251,10 @@ if(isset($_SESSION["username"])){
                 }
                 ?>
                 <aside class="side-profile margin-right-10">
-                    <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
+                    <img class="profile-picture-50" onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+                    echo $profilePictureDestination;
+                    echo $selfProfileData["profilePicture"];
+                    ?>" alt="">
                 </aside>
                 <main class="form width-100">
                     <textarea name="content" placeholder="Comment your reply"></textarea>

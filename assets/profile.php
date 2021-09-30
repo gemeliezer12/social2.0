@@ -41,7 +41,10 @@ if(isset($_SESSION["username"])){
                 ?>">
                     <main class="flex">
                         <aside class="side-profile margin-right-10 profile-picture-50">
-                            <img class="profile-picture-50" src="profiles/profile-picture/default.png" alt="">
+                            <img class="profile-picture-50" onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+                            echo $profilePictureDestination;
+                            echo $profileData["profilePicture"];
+                            ?>" alt="">
                         </aside>
                         <div>
                             <a href="profile.php?username=<?php

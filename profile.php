@@ -56,7 +56,10 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
         <header class="main-profile-header padding-15 padding-bottom-10 border-bottom">
             <div class="profile-picture-header">
                 <a class="aspect-1x1" href="">
-                    <img src="profiles/profile-picture/default.png" alt="">
+                    <img onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+                    echo $profilePictureDestination;
+                    echo $profileData["profilePicture"];
+                    ?>" alt="">
                 </a>
                 <?php
                 if(isset($_SESSION["userID"])){
@@ -188,7 +191,10 @@ else{
             <header class="main-profile-header padding-15 padding-bottom-10 border-bottom">
                 <div class="profile-picture-header">
                     <a class="aspect-1x1" href="">
-                        <img src="profiles/profile-picture/default.png" alt="">
+                        <img onerror="this.onerror=null; this.src='profiles/profile-picture/default.png'" class="profile-picture-50" src="<?php
+                    echo $profilePictureDestination;
+                    echo $profileData["profilePicture"];
+                    ?>" alt="">
                     </a>
                     <a class="btn-m btn-t following" href="index.php">Follow</a>
                 </div>
