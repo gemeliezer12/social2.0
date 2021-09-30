@@ -1,7 +1,7 @@
 <?php
 include "dbh.php";
+
 if(isset($_POST["submit"])){
-    echo $emailUsername = $_POST["email-username"];
     $password = $_POST["password"];
     if(empty($emailUsername) || empty($password)){
         header("Location: ../login.php?error=emptyfields");
@@ -33,6 +33,7 @@ if(isset($_POST["submit"])){
                 $_SESSION["username"] = $row["username"];
                 
                 header("Location: ../home.php");
+                
                 exit();
             }
         }

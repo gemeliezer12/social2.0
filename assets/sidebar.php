@@ -20,15 +20,15 @@
         <?php
         if(isset($_SESSION["userID"])){
             ?>
-            <i onclick="location.href='home.php';" class="fab fa-twitter icon-hover-m current"></i>
-            <i onclick="location.href='home.php';" class="fas fa-home icon-hover-m"></i>
-            <i onclick="location.href='search.php';" class="fas fa-search icon-hover-m"></i>
-            <i onclick="location.href='notif.php';" class="far fa-bell icon-hover-m"></i>
-            <i onclick="location.href='message.php';" class="far fa-envelope icon-hover-m"></i>
+            <i onclick="location.href='home.php';" class="fab fa-twitter icon-hover-m current margin-bottom-10"></i>
+            <i onclick="location.href='home.php';" class="fas fa-home icon-hover-m margin-bottom-10"></i>
+            <i onclick="location.href='search.php';" class="fas fa-search icon-hover-m margin-bottom-10"></i>
+            <i onclick="location.href='notif.php';" class="far fa-bell icon-hover-m margin-bottom-10"></i>
+            <i onclick="location.href='message.php';" class="far fa-envelope icon-hover-m margin-bottom-10"></i>
             <i onclick="location.href='profile.php?username=<?php
             echo $_SESSION["username"];
-            ?>';" class="far fa-user icon-hover-m"></i>
-            <i class="fas fa-cog icon-hover-m"></i>
+            ?>';" class="far fa-user icon-hover-m margin-bottom-10"></i>
+            <i class="fas fa-cog icon-hover-m margin-bottom-10"></i>
             <?php
         }
         else{
@@ -82,8 +82,6 @@
         <?php
     }
     else{
-        ?>
-        <?php
     }
     ?>
     

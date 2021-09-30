@@ -17,7 +17,7 @@ include "assets/header.php";
         <form class="main-body" action="inc/edit-profile.php" enctype="multipart/form-data" method="POST">
             <header class="padding-15 main-header width-100">
                 <i class="icon-hover-s fas fa-arrow-left current" onclick="window.history.go(-1); return false;"></i>
-                <input class="btn-m btn-c" name="submit" type="submit" value="submit">
+                <input class="btn-m btn-c" name="submit" type="submit" value="Save">
             </header>
             <div class="header-margin-top"></div>
             <div class="aspect-3x1" style="background: red;">
@@ -56,5 +56,13 @@ include "assets/header.php";
             </div>
         </div>
     </form>
+    <div>
+        <img src="profiles/profile-picture/<?php
+        echo $selfProfileData["profilePicture"];
+        ?>" alt="">
+    </div>
+    <div>
+        
+    </div>
 </body>
 </html>
