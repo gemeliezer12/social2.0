@@ -8,6 +8,8 @@ elseif(isset($_GET["comment"])){
 }
 ?>
 <body>
+<div class="body-400 border-if">
+
     <?php
         include "assets/sidebar.php";
     ?>
@@ -28,5 +30,6 @@ elseif(isset($_GET["comment"])){
             include "assets/profile.php";
         ?>
     </main>
+        </div>
 </body>
 </html>

@@ -584,3 +584,7 @@ script{
 .text-center{
     text-align: center;
 }
+
+.dim{
+    filter: brightness(60%);
+}

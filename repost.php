@@ -9,6 +9,8 @@ elseif(isset($_GET["comment"])){
 $reposters = $article->fetchByReposted($_GET[$articleType], $articleType);
 ?>
 <body>
+<div class="body-400 border-if">
+
     <?php
         include "assets/sidebar.php";
     ?>
@@ -29,5 +31,6 @@ $reposters = $article->fetchByReposted($_GET[$articleType], $articleType);
             include "assets/profile.php";
         ?>
     </main>
+        </div>
 </body>
 </html>

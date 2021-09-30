@@ -15,7 +15,7 @@
     });
 </script>
 
-<nav class="sidebar padding-top padding-bottom-15">
+<nav class="sidebar padding-top padding-bottom-15 z-30">
     <div class="icon-links">
         <?php
         if(isset($_SESSION["userID"])){

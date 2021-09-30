@@ -29,12 +29,12 @@ if(isset($_POST["submit"])){
                     move_uploaded_file($profilePictureTmpName, $profilePictureDestination);
                 }
                 else{
-                    // header("Location: javascript://history.go(-1)");
+                    header("Location: javascript://history.go(-1)");
                 }
                 print_r($newProfilePictureName);
             }
             else{
-                // header("Location: javascript://history.go(-1)");
+                header("Location: javascript://history.go(-1)");
             }
         }
         else{
@@ -52,12 +52,12 @@ if(isset($_POST["submit"])){
                 $newProfilePictureName = $result;
             }
 
-            // header("Location: javascript://history.go(-1)");
+            header("Location: javascript://history.go(-1)");
         }
         
     }
     if(empty($name)){
-        // header("Location: javascript://history.go(-1)");
+        header("Location: javascript://history.go(-1)");
     }
     
     else{
@@ -68,14 +68,12 @@ if(isset($_POST["submit"])){
         $query->bindValue(4, $newProfilePictureName);
         $query->execute();
 
-        print_r($profilePictureDestination);
-
-        // header("Location: javascript://history.go(-1)");
+        header("Location: javascript://history.go(-1)");
         
-        // exit();
+        exit();
     }
 }
 else{
-    // header("Location: javascript://history.go(-1)");
-    // exit();
+    header("Location: javascript://history.go(-1)");
+    exit();
 }
