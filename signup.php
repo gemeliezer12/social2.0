@@ -2,12 +2,13 @@
 include "assets/header.php";
 if(isset($_SESSION["username"])){
     header("location: home.php");
+    exit();
 }
 ?>
 <body class="index-page">
     <div class="body-300">
         
-        <form class="margin-top-80" action="inc/signup.php" method="POST">
+        <form class="padding-top-80" action="inc/signup.php" method="POST">
             <p class="title-40">Signup now</p>
             <div class="input-lbl margin-top-40">
                 <label for="username">Username</label>

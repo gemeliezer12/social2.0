@@ -30,11 +30,13 @@ if(isset($_POST["submit"])){
                 }
                 else{
                     header("Location: javascript://history.go(-1)");
+                    exit();
                 }
                 print_r($newProfilePictureName);
             }
             else{
                 header("Location: javascript://history.go(-1)");
+                exit();
             }
         }
         else{
@@ -53,11 +55,13 @@ if(isset($_POST["submit"])){
             }
 
             header("Location: javascript://history.go(-1)");
+            exit();
         }
         
     }
     if(empty($name)){
         header("Location: javascript://history.go(-1)");
+        exit();
     }
     
     else{

@@ -340,6 +340,10 @@ i.current{
     margin-bottom: 80px;
 }
 
+.padding-top-80{
+    padding-top: 80px;
+}
+
 .margin-top-80{
     margin-top: 80px;
 }
@@ -449,6 +453,16 @@ i.current{
 
 .radius-20{
     border-radius: 20px;
+}
+
+.radius-top-20{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.radius-bottom-20{
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 .border-all-base{
@@ -587,4 +601,8 @@ script{
 
 .dim{
     filter: brightness(60%);
+}
+
+.bg-bg{
+    background-color: var(--bg-color);
 }

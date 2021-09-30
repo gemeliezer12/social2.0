@@ -4,6 +4,7 @@ if(isset($_SESSION["username"])){
     $username = $_SESSION["username"];
 if(empty($_GET["username"])){
     header("Location: profile.php?username=$username");
+    exit();
 }
 $userData = $user->fetchData($_GET["username"]);
 $profileData = $profile->fetchData($userData["userID"]);
@@ -160,6 +161,7 @@ $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID
 else{
     if(empty($_GET["username"])){
         header("Location: index.php");
+        exit();
     }
     $userData = $user->fetchData($_GET["username"]);
     $profileData = $profile->fetchData($userData["userID"]);
@@ -168,10 +170,10 @@ else{
     $follower = $relationship->fetchFollower($userData["userID"]);
     ?>
     <body>
+<div class="body-400  relative border-if">
         <?php
             include "assets/sidebar.php";
         ?>
-
         <main class="sidebar-margin-left main-body">
             <header class="main-header padding-15">
                 <i class="fas fa-arrow-left icon-hover-s current margin-right-15" onclick="window.history.go(-1); return false;"></i>
@@ -255,7 +257,7 @@ else{
                 ?>
             </main>
         </main>
-    <div class="body-400  relative">
+        </div>
 </body>
     </html>
 

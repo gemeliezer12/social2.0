@@ -7,16 +7,19 @@ include "assets/header.php";
             const [file] = imgInp.files;
             if (file) {
                 preview.src = URL.createObjectURL(file);
+                var jsFileLocation = $('script[src*='+preview.src+']').attr('src');
             }
         }
-        console.log(preview.src);
     })
 </script>
-<body class="edit-profile">
+<body class="edit-profile relative">
     <div class="body-400">
         <form class="main-body" action="inc/edit-profile.php" enctype="multipart/form-data" method="POST">
             <header class="padding-15 main-header width-100">
-                <i class="icon-hover-s fas fa-arrow-left current" onclick="window.history.go(-1); return false;"></i>
+                <div class="align-center">
+                    <i class="icon-hover-s fas fa-arrow-left current" onclick="window.history.go(-1); return false;"></i>
+                    <p class="title-20 margin-left-15">Edit Profile</p>
+                </div>
                 <input class="btn-m btn-c" name="submit" type="submit" value="Save">
             </header>
             <div class="header-margin-top"></div>
@@ -55,14 +58,36 @@ include "assets/header.php";
                 </div>
             </div>
         </div>
+        <div class="croppie-con">
+            <header class="space-between">
+                    <div class="align-center">
+                        <i class="icon-hover-s fas fa-arrow-left current" onclick="window.history.go(-1); return false;"></i>
+                        <p class="title-20 margin-left-15">Edit media</p>
+                    </div>
+                <input class="btn-m btn-c" name="submit" type="submit" value="Apply">
+            </header>
+            <div>
+            <div id="upload-demo" class="demo"></div>
+
+            <script>
+            $uploadCrop = $('#upload-demo').croppie({
+                url: "profiles/profile-picture/1.jpg",
+                enableExif: true,
+                viewport: {
+                    width: 200,
+                    height: 200,
+                    type: 'square'
+                },
+                boundary: {
+                    width: 400,
+                    height: 400
+                }
+            });
+            </script>
+
+            </div>
+            <footer></footer>
+        </div>
     </form>
-    <div>
-        <img src="profiles/profile-picture/<?php
-        echo $selfProfileData["profilePicture"];
-        ?>" alt="">
-    </div>
-    <div>
-        
-    </div>
 </body>
 </html>
