@@ -28,7 +28,7 @@
             <i onclick="location.href='profile.php?username=<?php
             echo $_SESSION["username"];
             ?>';" class="far fa-user icon-hover-m margin-bottom-10"></i>
-            <i class="fas fa-cog icon-hover-m margin-bottom-10"></i>
+            <i class="fas fa-cog icon-hover-m margin-bottom-10" id="settings"></i>
             <?php
         }
         else{
@@ -86,3 +86,63 @@
     ?>
     
 </nav>
+<style>
+.label {
+	background-color: #111;
+	border-radius: 50px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 5px;
+	position: relative;
+	height: 26px;
+	width: 50px;
+	/* transform: scale(1.5); */
+}
+
+.label .ball {
+	background-color: #fff;
+	border-radius: 50%;
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	height: 22px;
+	width: 22px;
+	transform: translateX(0px);
+	transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .label .ball {
+	transform: translateX(24px);
+}
+
+
+.fa-moon {
+	color: #f1c40f;
+}
+
+.fa-sun {
+	color: #f39c12;
+}
+
+.checkbox {
+	opacity: 0;
+	position: absolute;
+}
+
+</style>
+<div class="bg-bg radius-6 hidden" id="settings-con" style="position: absolute; width: 250px; z-index: 30; top: 54px; border: 1px solid var(--base-color-trans1); padding: 10px;">
+    <div class="align-center">
+        <input type="checkbox" class="checkbox" id="chk" />
+        <label class="label margin-right-10" for="chk">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+            <div class="ball"></div>
+        </label>
+        <p class="title-16">Toggle Theme</p>
+    </div>
+</div>
+
+<script defer src="assets/darkmode.js">
+</script>

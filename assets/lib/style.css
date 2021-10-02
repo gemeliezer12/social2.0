@@ -25,7 +25,11 @@
     --opacity-4: 0.02;
     --bg-color: rgba(20, 25, 30);
 
-    /* --base-color: rgba(0, 0, 0);
+    --main-font: 'Roboto', sans-serif;
+}
+
+.light-mode{
+    --base-color: rgba(0, 0, 0);
     --base-color-trans1: rgba(0, 0, 0, 0);
     --base-color-trans2: rgba(0, 0, 0, 0.8);
     --base-color-trans3: rgba(0, 0, 0, 0.6);
@@ -46,9 +50,7 @@
     --opacity-2: 0.8;
     --opacity-3: 0.6;
     --opacity-4: 0;
-    --bg-color: white; */
-    
-    --main-font: 'Roboto', sans-serif;
+    --bg-color: white;
 }
 
 *{
@@ -456,6 +458,10 @@ i.current{
 
 .radius-20{
     border-radius: 20px;
+}
+
+.radius-6{
+    border-radius: 6px;
 }
 
 .radius-top-20{

@@ -97,7 +97,6 @@ include "assets/header.php";
             });
         });
         $('#editProfile').on('click', function (ev) {
-            // console.log($("#images").val());
             if($('#images')[0].files.length === 0){
                 console.log($("#images").val());
                 $.ajax({
