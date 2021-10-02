@@ -143,6 +143,3 @@
         <p class="title-16">Toggle Theme</p>
     </div>
 </div>
-
-<script defer src="assets/darkmode.js">
-</script>
