@@ -519,6 +519,7 @@
             window.addEventListener('mouseup', mouseUp);
             window.addEventListener('touchend', mouseUp);
             document.body.style[CSS_USERSELECT] = 'none';
+            console.log("ASDSADASDASDAS");
         }
 
         function mouseMove(ev) {

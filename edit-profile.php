@@ -1,16 +1,6 @@
 <?php
 include "assets/header.php";
 ?>
-<script>
-    $(document).ready(function(){
-        imgInp.onchange = evt => {
-            const [file] = imgInp.files;
-            if (file) {
-                preview.src = URL.createObjectURL(file);
-                var jsFileLocation = $('script[src*='+preview.src+']').attr('src');
-            }
-        }
-    })
 </script>
 <body class="edit-profile relative">
     <div class="body-400">
@@ -34,7 +24,7 @@ include "assets/header.php";
                         echo $selfProfileData["profilePicture"];
                         ?>" alt="">
                         <i class="fas fa-camera icon-hover-s-neutral">
-                            <input class="middle" name="profile-picture" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"  id="imgInp" type="file">
+                            <input class="middle" name="profile-picture" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/quicktime,video/webm"  id="images" type="file" onclick="this.value=null;">
                         </i>
                     </div>
                 </div>
@@ -58,36 +48,70 @@ include "assets/header.php";
                 </div>
             </div>
         </div>
-        <div class="croppie-con">
-            <header class="space-between">
+        <div class="croppie-con hidden z-30 radius-20">
+            <header class="space-between height-54 align-center padding-15">
                     <div class="align-center">
-                        <i class="icon-hover-s fas fa-arrow-left current" onclick="window.history.go(-1); return false;"></i>
+                        <i class="icon-hover-s fas fa-arrow-left current add-hide"></i>
                         <p class="title-20 margin-left-15">Edit media</p>
                     </div>
-                <input class="btn-m btn-c" name="submit" type="submit" value="Apply">
+                <button class="upload-result btn-m btn-c btn btn-success crop_image">Apply</button>
             </header>
-            <div>
-            <div id="upload-demo" class="demo"></div>
-
-            <script>
-            $uploadCrop = $('#upload-demo').croppie({
-                url: "profiles/profile-picture/1.jpg",
-                enableExif: true,
-                viewport: {
-                    width: 200,
-                    height: 200,
-                    type: 'square'
-                },
-                boundary: {
-                    width: 400,
-                    height: 400
-                }
-            });
-            </script>
-
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="upload-image"></div>
+                </div>
             </div>
-            <footer></footer>
+            <script>
+                $image_crop = $('#upload-image').croppie({
+                    enableExif: true,
+                    viewport: {
+                        width: 200,
+                        height: 200,
+                        type: 'square'
+                    },
+                    boundary: {
+                        width: 300,
+                        height: 300
+                    }
+                });
+                $('#images').on('change', function () {
+                    console.log($("#preview").attr("src"));
+                    $(".croppie-con").removeClass("hidden");
+                    $(".opacity-lower").removeClass("hidden");
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $image_crop.croppie('bind', {
+                            url: e.target.result
+                        }).then(function(){
+                            console.log('jQuery bind complete');
+                        });
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                });
+                $('.crop_image').on('click', function (ev) {	
+                    $image_crop.croppie('result', {
+                        type: 'canvas',
+                        size: 'viewport'
+                    }).then(function (response) {
+                        $.ajax({
+                            type:'POST',				 
+                            data: { image:response },
+                            url: "inc/edit-profile.php",
+                            success: function (data) {					
+                                $("#preview").attr("src", response);
+                            }
+                        });
+                    });
+                });
+                $(".add-hide").click(function(){
+                    $(".croppie-con").addClass("hidden");
+                    $(".opacity-lower").addClass("hidden");
+                })
+            </script>
         </div>
     </form>
+    <link rel="stylesheet" href="assets/lib/croppie.css">
+    <link rel="stylesheet" href="assets/lib/croppie.js">
+    <div class="opacity-lower hidden"></div>
 </body>
 </html>

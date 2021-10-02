@@ -1,6 +1,9 @@
 <?php
 include "dbh.php";
 $id = $_SESSION["userID"];
+
+echo $_FILES["image"];
+
 if(isset($_POST["submit"])){
     $name = $_POST["name"];
     $bio = $_POST["bio"];
@@ -29,14 +32,14 @@ if(isset($_POST["submit"])){
                     move_uploaded_file($profilePictureTmpName, $profilePictureDestination);
                 }
                 else{
-                    header("Location: javascript://history.go(-1)");
-                    exit();
+                    // header("Location: javascript://history.go(-1)");
+                    // exit();
                 }
                 print_r($newProfilePictureName);
             }
             else{
-                header("Location: javascript://history.go(-1)");
-                exit();
+                // header("Location: javascript://history.go(-1)");
+                // exit();
             }
         }
         else{
@@ -54,14 +57,14 @@ if(isset($_POST["submit"])){
                 $newProfilePictureName = $result;
             }
 
-            header("Location: javascript://history.go(-1)");
-            exit();
+            // header("Location: javascript://history.go(-1)");
+            // exit();
         }
         
     }
     if(empty($name)){
-        header("Location: javascript://history.go(-1)");
-        exit();
+        // header("Location: javascript://history.go(-1)");
+        // exit();
     }
     
     else{
@@ -72,12 +75,11 @@ if(isset($_POST["submit"])){
         $query->bindValue(4, $newProfilePictureName);
         $query->execute();
 
-        header("Location: javascript://history.go(-1)");
-        
-        exit();
+        // header("Location: javascript://history.go(-1)");
+        // exit();
     }
 }
 else{
-    header("Location: javascript://history.go(-1)");
-    exit();
+    // header("Location: javascript://history.go(-1)");
+    // exit();
 }

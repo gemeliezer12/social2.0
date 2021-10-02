@@ -6,12 +6,13 @@
     --base-comp-color-trans1: rgba(0, 0, 0, 0.2);
     --base-comp-color-trans2: rgba(0, 0, 0, 0.8);
     --base-comp-color-trans3: rgba(0, 0, 0, 0.4);
-    --base-comp-color-trans4: rgba(0, 0, 0, 0.02);
+    --base-comp-color-trans4: rgba(0, 0, 0, 0.1);
     --base-color: rgba(255, 255, 255);
     --base-color-trans1: rgba(255, 255, 255, 0.2);
     --base-color-trans2: rgba(255, 255, 255, 0.8);
     --base-color-trans3: rgba(255, 255, 255, 0.4);
     --base-color-trans4: rgba(255, 255, 255, 0.02);
+    --base-color-trans5: rgba(255, 255, 255, 0.1);
     --primary-color1: rgba(30, 175, 225);
     --primary-color1-trans1: rgba(30, 175, 225, 0.1);
     --primary-color1-trans2: rgba(30, 175, 225, 0.8);
@@ -29,6 +30,8 @@
     --base-color-trans2: rgba(0, 0, 0, 0.8);
     --base-color-trans3: rgba(0, 0, 0, 0.6);
     --base-color-trans4: rgba(0, 0, 0, 0.0);
+    --base-color-trans4: rgba(0, 0, 0, 0.02);
+    --base-color-trans4: rgba(0, 0, 0, 0.2);
     --base-comp-color: rgba(255, 255, 255);
     --base-comp-color-trans1: rgba(255, 255, 255, 0.2);
     --base-comp-color-trans2: rgba(255, 255, 255, 0.8);
@@ -576,7 +579,7 @@ script{
     width: 100vw;
     top: 0;
     left: 0;
-    background: var(--base-color-trans1);
+    background: var(--base-color-trans5);
 }
 
 .z-0{
