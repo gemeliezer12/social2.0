@@ -1,4 +1,4 @@
-<div style="height: calc(100vh - 54px);">
+<div style="height: calc(100vh - 54px); position: relative;">
     <style>
         .loader {
             border-top: 2px solid var(--primary-color1); /* Blue */
@@ -9,11 +9,12 @@
             width: 26px;
             height: 26px;
             animation: spin .6s linear infinite;
-            margin: auto;
-            margin-top: 10px;
             position: absolute;
-            left: 50%;
-            transform:;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            margin-top: 10px;
+
             }
 
             @keyframes spin {

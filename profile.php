@@ -12,7 +12,7 @@ $profileData = $profile->fetchData($userData["userID"]);
 $userPost = $article->fetchByUser($userData["userID"], "post");
 $following = $relationship->fetchFollowing($userData["userID"]);
 $follower = $relationship->fetchFollower($userData["userID"]);
-// $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID"]);
+$checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID"]);
 ?>
 <script>
     $(document).ready(function(){

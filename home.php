@@ -38,16 +38,18 @@ if(!isset($_SESSION["username"])){
             <?php
             if(!empty($implodeFollowing)){
                 $query = $pdo->prepare(
-                    "SELECT 'repostPost' as type, p.userID, postID as articleID, p.content, r.dateCreated FROM posts p
+                    "SELECT 'repostPost' as type, p.userID, postID as articleID, p.content, r.dateCreated as dateCreated FROM posts p
                     JOIN reposts r ON p.postID=r.repostedPost
                     WHERE r.userID in ($implodeFollowing) AND p.userID NOT IN ($implodeFollowing) AND p.userID!=?
                     GROUP BY postID
-                    UNION SELECT 'repostComment' as type, c.userID, commentID as articleID, c.content, r.dateCreated FROM comments c
+                    UNION SELECT 'repostComment' as type, c.userID, commentID as articleID, c.content, r.dateCreated as dateCreated FROM comments c
                     JOIN reposts r ON c.commentID=r.repostedComment WHERE r.userID in ($implodeFollowing) AND c.userID NOT IN ($implodeFollowing) AND c.userID!=?
                     GROUP BY commentID
                     UNION
-                    SELECT 'post' as type, p.userID, postID, p.content, p.dateCreated FROM posts p
-                    WHERE p.userID IN ($implodeFollowing) AND p.userID!=?;"
+                    SELECT 'post' as type, p.userID, postID, p.content, p.dateCreated as dateCreated FROM posts p
+                    WHERE p.userID IN ($implodeFollowing) AND p.userID!=?
+                    ORDER BY dateCreated DESC
+                    LIMIT 5;"
                 );
                 $query->bindValue(1, $_SESSION["userID"]);
                 $query->bindValue(2, $_SESSION["userID"]);
@@ -75,17 +77,36 @@ if(!isset($_SESSION["username"])){
 $(document).ready(function(){
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        // alert("bottom!");
         console.log("SADASDASDASD");
     }
     });
 });
 </script>
 <script>
-    // $(document).ready(function(){
-    //     $.ajax:({
-    //        type: "POST", 
-    //         url: ""
-    //     })
-    // })
+    $(document).ready(function(){
+        let dateLimit = <?php
+                print_r(end($postArray)["dateCreated"])    
+                ?>;
+        let articleLimit = <?php
+                print_r(end($postArray)["articleID"])    
+                ?>;
+        let typeLimit = "<?php
+                print_r(end($postArray)["type"])    
+                ?>";
+        let implodeFollowing = "<?php
+                echo $implodeFollowing; 
+                ?>";
+        $.ajax({
+           type: "POST", 
+            url: "ajax/home-article.php",
+            data: {
+                dateLimit: dateLimit,
+                articleLimit: articleLimit,
+                typeLimit: typeLimit,
+                implodeFollowing: implodeFollowing
+            },
+            success: function(data){
+            }
+        })
+    })
 </script>

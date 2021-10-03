@@ -1,15 +1,33 @@
-<?php
-$dateCreatedArray= array();
-foreach($postArray as $post){;
-        array_push($dateCreatedArray, $post["dateCreated"]);
+<script>
+    $(document).ready(function(){
+        $(".repost-parent").click(function(){
+            var articleID = $(this).parent().children(".article").val();
+            var type = $(this).parent().children(".article").attr("id");
+            var submit = $(this).attr("name");
+            $(".repost-loader").load("inc/repost.php",{
+                articleID: articleID,
+                type: type,
+                submit: submit
+            })
+        })
+        $(".like-parent").click(function(){
+            var articleID = $(this).parent().children(".article").val();
+            var type = $(this).parent().children(".article").attr("id");
+            var submit = $(this).attr("name");
+            $(".like-loader").load("inc/like.php",{
+                articleID: articleID,
+                type: type,
+                submit: submit
+            })
+        })
+    })
+</script>
 
-}
-array_multisort($dateCreatedArray, SORT_DESC, $postArray);
+<?php
 
 
 for($i = 0; $i < count($postArray); $i++){
     $post = $postArray[$i];
-    // Determines if an Article is a post, comment, repostPost or a repostComment
     if($post["type"] == "post"){
         $articleType = "post";
         
@@ -55,37 +73,6 @@ for($i = 0; $i < count($postArray); $i++){
                     type: "<?php echo $articleType?>"
                 });
             }, 5000);
-            // Like and repost without reloading using AJAX and JQUERY
-            <?php
-            if(isset($_SESSION["username"])){
-                ?>
-                $("#main-like<?php
-                echo $i;
-                ?>").click(function(){
-                $(".like-loader").load("inc/like.php",{
-                    articleID: <?php echo $post["articleID"]?>,
-                    posterID: "<?php echo $post["userID"]?>",
-                    submit: $(this).attr("name"),
-                    type: "<?php
-                    echo $articleType;
-                    ?>"
-                    });
-                })
-                $("#main-repost<?php
-                echo $i;
-                ?>").click(function(){
-                    $(".repost-loader").load("inc/repost.php",{
-                    articleID: <?php echo $post["articleID"]?>,
-                    posterID: "<?php echo $post["userID"]?>",
-                    submit: $(this).attr("name"),
-                    type: "<?php
-                    echo $articleType;
-                    ?>"
-                    });
-                })
-                <?php
-            }
-            ?>
             // Links to the main post page except when Like or Repost is click
             $(".<?php
             echo $articleType;
@@ -270,6 +257,9 @@ for($i = 0; $i < count($postArray); $i++){
                             ?></p>
                         </button>
                         <i class="fas fa-ellipsis-h icon-hover-s"></i>
+                        <input type="hidden" class="article" id="post" value="<?php
+                        echo $post["articleID"];
+                        ?>">
                     </footer>
                 </main>
             </div>

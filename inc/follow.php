@@ -2,6 +2,10 @@
 include "dbh.php";
 include "../class/relationship.php";
 
+?>
+
+<?php
+
 $relationship = new Relationship;
 $follower = $_SESSION["userID"];
 $following = $_POST["following"];
@@ -51,6 +55,7 @@ echo $followerCount;
     <?php
     if($submit == "submit"){
         ?>
+        
         $("#follow-input<?php
                 echo $following;
                 ?>").toggleClass("btn-c btn-t hover-color");

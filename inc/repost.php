@@ -64,6 +64,11 @@ $fetchLike = $like->fetchLike($articleID, $type);
 $countLike = count($fetchLike);
 $fetchRepost = $article->fetchByReposted($articleID, $type);
 $countRepost = count($fetchRepost);
+$data = [
+    'likes' => $countLike,
+    'reposts' => $countRepost,
+];
+
 ?>
 <script>
 repost = $(".repost-input-<?php
