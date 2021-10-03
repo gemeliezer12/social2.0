@@ -131,8 +131,17 @@
 	position: absolute;
 }
 
+#settings-con{
+    position: fixed;
+    width: 250px;
+    z-index: 30;
+    top: 54px;
+    border: 1px solid var(--base-color-trans1);
+    padding: 10px;
+}
+
 </style>
-<div class="bg-bg radius-6 hidden" id="settings-con" style="position: absolute; width: 250px; z-index: 30; top: 54px; border: 1px solid var(--base-color-trans1); padding: 10px;">
+<div class="bg-bg radius-6 hidden" id="settings-con" style="">
     <div class="align-center">
         <input type="checkbox" class="checkbox" id="chk" />
         <label class="label margin-right-10" for="chk">

@@ -7,7 +7,6 @@ $(document).ready(function(){
     if(lightMode === "enabled"){
         $("#chk").prop('checked', true);
     }
-    
     function enableLightMode(){
         localStorage.setItem("lightMode", "enabled");
         $("html").addClass("light-mode");
