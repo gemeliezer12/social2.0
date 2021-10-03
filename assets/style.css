@@ -43,14 +43,14 @@
 .body-400{
     width: 100%;
     max-width: 600px;
-    height: 100vh;
+    /* height: 100vh; */
     margin: auto;
 }
 
 .body-300{
     width: 100%;
     max-width: 400px;
-    height: 100vh;
+    /* height: 100vh; */
     margin: auto;
 }
 

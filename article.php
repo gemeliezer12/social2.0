@@ -277,6 +277,9 @@ if(isset($_SESSION["username"])){
                 include "assets/article.php";
                 ?>
             </main>
+            <?php
+                include "assets/loader.php";
+            ?>
         </main>
         <div class="main-ajax-loader"></div>
     </div>

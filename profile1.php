@@ -2,7 +2,6 @@
 include "assets/header.php";
 if(isset($_SESSION["username"])){
     $username = $_SESSION["username"];
-}
 if(empty($_GET["username"])){
     header("Location: profile.php?username=$username");
     exit();
@@ -12,7 +11,7 @@ $profileData = $profile->fetchData($userData["userID"]);
 $userPost = $article->fetchByUser($userData["userID"], "post");
 $following = $relationship->fetchFollowing($userData["userID"]);
 $follower = $relationship->fetchFollower($userData["userID"]);
-// $checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID"]);
+$checkFollow = $relationship->checkFollow($userData["userID"], $_SESSION["userID"]);
 ?>
 <script>
     $(document).ready(function(){
@@ -90,7 +89,7 @@ $follower = $relationship->fetchFollower($userData["userID"]);
                 }
                 else{
                     ?>
-                    <a class="btn-m btn-t hover-color following" href="index.php">Follow</a>
+                    <a href="index.php">Follow</a>
                     <?php
                 }
                 
@@ -152,12 +151,11 @@ $follower = $relationship->fetchFollower($userData["userID"]);
             include "assets/article.php";
             ?>
         </main>
-        <?php
-            include "assets/loader.php";
-        ?>
+        <div style="height: calc(100vh - 54px);"></div>
     </main>
 </body>
 </html>
 
 <div class="follow-loader"></div>
-<?php
+    <?php
+}

@@ -50,6 +50,7 @@ if(isset($_GET["search"])){
             include "assets/article.php";
             ?>
         </main>
+        <div style="height: 100vh;"></div>
     </div>
 </body>
 </html>

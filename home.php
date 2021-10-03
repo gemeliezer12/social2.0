@@ -7,12 +7,11 @@ if(!isset($_SESSION["username"])){
 ?>
 <body>
     <div class="body-400 border-if">
-
         <?php
         include "assets/sidebar.php";
         ?>
         <main class="sidebar-margin-left main-body" style="">
-            <header class="main-header padding-15 border-bottom">
+            <header class="main-header padding-15 border-bottom z-30">
                 <a class="width-100 height-100" href="home.php">
                     <p class="title-20">
                         Home
@@ -39,7 +38,16 @@ if(!isset($_SESSION["username"])){
             <?php
             if(!empty($implodeFollowing)){
                 $query = $pdo->prepare(
-                    "SELECT 'repostPost' as type, p.userID, postID as articleID, p.content, r.dateCreated FROM posts p JOIN reposts r ON p.postID=r.repostedPost WHERE r.userID in ($implodeFollowing) AND p.userID NOT IN ($implodeFollowing) AND p.userID!=? GROUP BY postID UNION SELECT 'repostComment' as type, c.userID, commentID as articleID, c.content, r.dateCreated FROM comments c JOIN reposts r ON c.commentID=r.repostedComment WHERE r.userID in ($implodeFollowing) AND c.userID NOT IN ($implodeFollowing) AND c.userID!=? GROUP BY commentID UNION SELECT 'post' as type, p.userID, postID, p.content, p.dateCreated FROM posts p WHERE p.userID IN ($implodeFollowing) AND p.userID!=?;"
+                    "SELECT 'repostPost' as type, p.userID, postID as articleID, p.content, r.dateCreated FROM posts p
+                    JOIN reposts r ON p.postID=r.repostedPost
+                    WHERE r.userID in ($implodeFollowing) AND p.userID NOT IN ($implodeFollowing) AND p.userID!=?
+                    GROUP BY postID
+                    UNION SELECT 'repostComment' as type, c.userID, commentID as articleID, c.content, r.dateCreated FROM comments c
+                    JOIN reposts r ON c.commentID=r.repostedComment WHERE r.userID in ($implodeFollowing) AND c.userID NOT IN ($implodeFollowing) AND c.userID!=?
+                    GROUP BY commentID
+                    UNION
+                    SELECT 'post' as type, p.userID, postID, p.content, p.dateCreated FROM posts p
+                    WHERE p.userID IN ($implodeFollowing) AND p.userID!=?;"
                 );
                 $query->bindValue(1, $_SESSION["userID"]);
                 $query->bindValue(2, $_SESSION["userID"]);
@@ -54,8 +62,30 @@ if(!isset($_SESSION["username"])){
                 <?php
                 include "assets/article.php";
                 ?>
+                <?php
+                include "assets/loader.php";
+                ?>
             </main>
         </main>
     </div>
 </body>
 </html>
+
+<script>
+$(document).ready(function(){
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+        // alert("bottom!");
+        console.log("SADASDASDASD");
+    }
+    });
+});
+</script>
+<script>
+    // $(document).ready(function(){
+    //     $.ajax:({
+    //        type: "POST", 
+    //         url: ""
+    //     })
+    // })
+</script>
