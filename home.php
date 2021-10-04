@@ -106,6 +106,7 @@ $(document).ready(function(){
                 implodeFollowing: implodeFollowing
             },
             success: function(data){
+                console.log(data);
             }
         })
     })
