@@ -1,4 +1,4 @@
-<div style="height: calc(100vh - 54px); position: relative;">
+<div id="loading-section" style="height: calc(100vh - 54px); position: relative;">
     <style>
         .loader {
             border-top: 2px solid var(--primary-color1); /* Blue */

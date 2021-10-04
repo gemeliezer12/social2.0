@@ -49,7 +49,7 @@ if(!isset($_SESSION["username"])){
                     SELECT 'post' as type, p.userID, postID, p.content, p.dateCreated as dateCreated FROM posts p
                     WHERE p.userID IN ($implodeFollowing) AND p.userID!=?
                     ORDER BY dateCreated DESC
-                    LIMIT 5;"
+                    LIMIT 3;"
                 );
                 $query->bindValue(1, $_SESSION["userID"]);
                 $query->bindValue(2, $_SESSION["userID"]);
@@ -77,13 +77,8 @@ if(!isset($_SESSION["username"])){
 $(document).ready(function(){
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
-        console.log("SADASDASDASD");
-    }
-    });
-});
-</script>
-<script>
-    $(document).ready(function(){
+        $(document).ready(function(){
+    
         let dateLimit = <?php
                 print_r(end($postArray)["dateCreated"])    
                 ?>;
@@ -96,6 +91,8 @@ $(document).ready(function(){
         let implodeFollowing = "<?php
                 echo $implodeFollowing; 
                 ?>";
+
+                console.log(articleLimit);
         $.ajax({
            type: "POST", 
             url: "ajax/home-article.php",
@@ -105,9 +102,11 @@ $(document).ready(function(){
                 typeLimit: typeLimit,
                 implodeFollowing: implodeFollowing
             },
-            success: function(data){
-                console.log(data);
+            success: function(response){
+                $(response).insertBefore($('#loading-section'));        
             }
         })
-    })
+    })}
+    });
+});
 </script>
