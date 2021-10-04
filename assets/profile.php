@@ -30,7 +30,7 @@ if(isset($_SESSION["username"])){
                         echo $userID;
                         ?>").click(function(e){
                             if(!$(e.target).hasClass("dont-link")){
-                                window.location.href = "http://localhost/social2.0/profile.php?username=<?php echo $userID?>";
+                                window.location.href = "profile.php?username=<?php echo $userID?>";
                             }
                         })
                     })

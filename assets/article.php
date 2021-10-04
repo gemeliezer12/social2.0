@@ -27,12 +27,11 @@
             var id = idSplit[1];
             console.log(id);
             if(!$(e.target).hasClass("dont-link")){
-                window.location.href = "http://localhost/social2.0/article.php?"+type+"="+id;
+                window.location.href = "article.php?"+type+"="+id;
             }
         })
     })
 </script>
-
 <?php
 
 
