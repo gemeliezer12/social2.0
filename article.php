@@ -20,6 +20,7 @@ if(isset($_SESSION["username"])){
     $mainCheckRepost = $article->checkReposted($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
     $mainCheckComment = $article->checkCommented($mainArticle[$mainArticleType."ID"], $_SESSION["userID"], $mainArticleType);
 }
+
 ?>
 <body>
     <div class="body-400 border-if">
@@ -36,41 +37,7 @@ if(isset($_SESSION["username"])){
                         main: "true"
                     });
                 }, 5000);
-                <?php
-                if(isset($_SESSION["username"])){
-                    ?>
-                    $(".like-input-<?php
-                    echo $mainArticleType;
-                    echo $mainArticle[$mainArticleID]
-                        ?>").click(function(){
-                            $(".like-loader").load("inc/like.php",{
-                            articleID: <?php echo $mainArticle[$mainArticleID]?>,
-                            posterID: "<?php echo $mainArticle["userID"]?>",
-                            submit: $(this).attr("name"),
-                            type: "<?php
-                            echo $mainArticleType;
-                            ?>",
-                            main: "true"
-                        });
-                    })
-                    $(".repost-input-<?php
-                    echo $mainArticleType;
-                    echo $mainArticle[$mainArticleID]
-                        ?>").click(function(){
-                            
-                            $(".repost-loader").load("inc/repost.php",{
-                            articleID: <?php echo $mainArticle[$mainArticleID]?>,
-                            posterID: "<?php echo $mainArticle["userID"]?>",
-                            submit: $(this).attr("name"),
-                            type: "<?php
-                            echo $mainArticleType;
-                            ?>",
-                            main: "true"
-                        });
-                    })
-                    <?php
-                }
-                ?>
+                
             })
         </script>
         <main class="sidebar-margin-left main-body">
@@ -224,7 +191,11 @@ if(isset($_SESSION["username"])){
                             ?>"></i>
                         </button>
                         <i class="fas fa-ellipsis-h icon-hover-s"></i>
-                    </footer>
+                        <input type="hidden" class="article" id="<?php
+                        echo $mainArticleType;
+                        ?>" value="<?php
+                        echo $mainArticle[$mainArticleID];
+                        ?>">
                     </footer>
                 </div>
             </main>

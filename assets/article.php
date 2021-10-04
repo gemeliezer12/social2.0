@@ -20,6 +20,16 @@
                 submit: submit
             })
         })
+        $(".article-link").click(function(e){
+            var id = $(this).attr("id");
+            var idSplit = id.split("-");
+            var type = idSplit[0];
+            var id = idSplit[1];
+            console.log(id);
+            if(!$(e.target).hasClass("dont-link")){
+                window.location.href = "http://localhost/social2.0/article.php?"+type+"="+id;
+            }
+        })
     })
 </script>
 
@@ -74,22 +84,14 @@ for($i = 0; $i < count($postArray); $i++){
                 });
             }, 5000);
             // Links to the main post page except when Like or Repost is click
-            $(".<?php
-            echo $articleType;
-            echo "-link";
-            echo $post["articleID"];
-            ?>").click(function(e){
-                if(!$(e.target).hasClass("dont-link")){
-                    window.location.href = "http://localhost/social2.0/article.php?<?php echo $articleType?>=<?php echo $post["articleID"]?>";
-                }
-            })
+            
         })
     </script>
-        <article class="cursor-pointer padding-15 padding-equal border-bottom hover-base-4 <?php
+        <article class="cursor-pointer padding-15 padding-equal border-bottom hover-base-4 article-link" id="<?php
         echo $articleType;
-        echo "-link";
+        echo "-";
         echo $post["articleID"];
-        ?>" >
+        ?>">
         <?php
         if($post["type"] == "repostPost" || $post == "repostComment"){
             ?>
@@ -190,8 +192,6 @@ for($i = 0; $i < count($postArray); $i++){
                         <button class="btn-count repost-parent repost-input-<?php
                         echo $articleType;
                         echo $post["articleID"];
-                        ?>" id="main-repost<?php
-                        echo $i;
                         ?>" name="<?php
                         if($checkRepost > 0){
                             echo "unsubmit";
@@ -224,8 +224,6 @@ for($i = 0; $i < count($postArray); $i++){
                         <button class="btn-count like-parent like-input-<?php
                         echo $articleType;
                         echo $post["articleID"];
-                        ?>" id="main-like<?php
-                        echo $i;
                         ?>" name="<?php
                         if($checkLike > 0){
                             echo "unsubmit";
@@ -257,7 +255,9 @@ for($i = 0; $i < count($postArray); $i++){
                             ?></p>
                         </button>
                         <i class="fas fa-ellipsis-h icon-hover-s"></i>
-                        <input type="hidden" class="article" id="post" value="<?php
+                        <input type="hidden" class="article" id="<?php
+                        echo $articleType;
+                        ?>" value="<?php
                         echo $post["articleID"];
                         ?>">
                     </footer>
@@ -270,3 +270,4 @@ for($i = 0; $i < count($postArray); $i++){
 <div class="ajax-loader"></div>
 <div class="like-loader"></div>
 <div class="repost-loader"></div>
+<div class="article-loader"></div>

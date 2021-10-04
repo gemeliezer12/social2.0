@@ -10,6 +10,7 @@ $articleID = $_POST["articleID"];
 $type = $_POST["type"];
 $submit = $_POST["submit"];
 
+// Database Stuff
 
 if($submit == "submit"){
     ?>
@@ -21,13 +22,11 @@ if($submit == "submit"){
     </script>
     <?php
     if($type == "post"){
-        
         $query = $pdo->prepare("INSERT INTO likes (userID, likedPost,dateCreated) VALUES (?, ?, ?)");
         $query->bindValue(1, $userID);
         $query->bindValue(2, $articleID);
         $query->bindValue(3, time());
         $query->execute();
-
     }
     elseif($type == "comment"){
             $query = $pdo->prepare("INSERT INTO likes (userID, likedComment,dateCreated) VALUES (?, ?, ?)");
@@ -59,6 +58,9 @@ elseif($submit == "unsubmit"){
         $query->execute();
     }
 }
+
+// Dom Manipulation Stuff
+
 $fetchLike = $like->fetchLike($articleID, $type);
 $countLike = count($fetchLike);
 $fetchRepost = $article->fetchByReposted($articleID, $type);
